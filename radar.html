@@ -189,7 +189,7 @@ nav.tiers a[aria-current="page"] {
   font-size: 0.85rem;
   font-weight: 600;
   line-height: 1.45;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 .chip-good {
@@ -253,6 +253,43 @@ th, td {
   text-align: left;
   padding: 0.4rem 0.6rem;
   border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
 }
 
 footer {
@@ -334,7 +371,7 @@ footer {
 </head>
 <body>
 <header><h1>Радар функцій</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html">Останній випуск</a></li><li><a href="radar.html" aria-current="page">Радар</a></li></ul></nav></header>
-<main><p>Усі відстежувані функції: поточний вердикт, стан і як вони змінювалися від випуску до випуску.</p><div class="table-wrap"><table><thead><tr><th scope="col">Функція</th><th scope="col">Вердикт</th><th scope="col">Чи працює</th><th scope="col">Остання зміна</th><th scope="col">Історія</th></tr></thead><tbody><tr><td><a href="issues/2026-09-25-od-2/medium.html">Нова настройка обмежує ширину тексту у широких терміналах</a> <span class="vendor">claude-code</span></td><td><span class="chip chip-good">Впроваджувати</span></td><td><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: 0 · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Впроваджувати · Невідомо · відкритих багів: 0 · виправлень після релізу: 0</li></ol></td></tr><tr><td><a href="issues/2026-09-25-od-2/medium.html">Гаряча клавіша миттєвого надсилання зливає чергу повідомлень</a> <span class="vendor">claude-code</span></td><td><span class="chip chip-good">Впроваджувати</span></td><td><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Впроваджувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td><a href="issues/2026-09-25-od-2/medium.html">Валідатор плагінів тепер виявляє некоректну конфігурацію MCP</a> <span class="vendor">claude-code</span></td><td><span class="chip chip-info">Спробувати</span></td><td><span class="chip chip-warn">Працює із застереженнями</span><br><span class="reliability">відкритих багів: 4 · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Спробувати · Працює із застереженнями · відкритих багів: 4 · виправлень після релізу: 0</li></ol></td></tr><tr><td><a href="issues/2026-09-25-od-2/medium.html">Fast mode вдвічі пришвидшує вивід Opus за додаткову ціну</a> <span class="vendor">anthropic</span></td><td><span class="chip chip-warn">Стежити</span></td><td><span class="chip chip-bad">Сире</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Стежити · Сире · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td><a href="issues/2026-09-25-od-2/medium.html">Cursor додає боти для перевірки після деплою та безпеки</a> <span class="vendor">cursor</span></td><td><span class="chip chip-warn">Стежити</span></td><td><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Стежити · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td><a href="issues/2026-09-25-od-2/medium.html">Claude Opus 5.5 виходить із контекстом 1M за замовчуванням</a> <span class="vendor">anthropic</span></td><td><span class="chip chip-info">Спробувати</span></td><td><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Спробувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td><a href="issues/2026-09-25-od-2/medium.html">Auto mode за замовчуванням використовує серверний класифікатор моделі</a> <span class="vendor">claude-code</span></td><td><span class="chip chip-warn">Стежити</span></td><td><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: 0 · виправлень після релізу: 0</span></td><td class="last-change">2026-09-25-od-2</td><td><ol class="history"><li>2026-09-25-od-2: Стежити · Невідомо · відкритих багів: 0 · виправлень після релізу: 0</li></ol></td></tr></tbody></table></div></main>
+<main><p>Усі відстежувані функції: поточний вердикт, стан і як вони змінювалися від випуску до випуску.</p><div class="table-wrap radar"><table><thead><tr><th scope="col">Функція</th><th scope="col">Вердикт</th><th scope="col">Чи працює</th><th scope="col">Остання зміна</th><th scope="col">Історія</th></tr></thead><tbody><tr><td data-label="Функція"><a href="issues/2026-09-25-od-3/medium.html">Швидкий режим удвічі підвищує пропускну здатність Opus за преміальну ціну</a> <span class="vendor">anthropic</span></td><td data-label="Вердикт"><span class="chip chip-warn">Стежити</span></td><td data-label="Чи працює"><span class="chip chip-bad">Сире</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-2</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Стежити · Сире · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-3/medium.html">Застосунок GitHub Copilot додає локальний sandboxing</a> <span class="vendor">github</span></td><td data-label="Вердикт"><span class="chip chip-warn">Стежити</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-3</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-3: Стежити · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-3/medium.html">Відмова від класифікатора auto mode тепер працює й у прямому API</a> <span class="vendor">claude-code</span></td><td data-label="Вердикт"><span class="chip chip-info">Спробувати</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: 0 · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-3</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Стежити · Невідомо · відкритих багів: 0 · виправлень після релізу: 0</li><li>2026-09-25-od-3: Спробувати · Невідомо · відкритих багів: 0 · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-3/medium.html">Subagents тепер можуть повністю пропускати контекст CLAUDE.md</a> <span class="vendor">claude-code</span></td><td data-label="Вердикт"><span class="chip chip-info">Спробувати</span></td><td data-label="Чи працює"><span class="chip chip-bad">Сире</span><br><span class="reliability">відкритих багів: 228 · виправлень після релізу: 2</span></td><td data-label="Остання зміна">2026-09-25-od-3</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-3: Спробувати · Сире · відкритих багів: 228 · виправлень після релізу: 2</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-3/medium.html">Opus 5.5 виходить із контекстом 1M і дешевше за Opus 5</a> <span class="vendor">anthropic</span></td><td data-label="Вердикт"><span class="chip chip-info">Спробувати</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-2</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Спробувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-3/medium.html">Agent SDK додає verbatim_prompts для блокування prompt injection</a> <span class="vendor">anthropic</span></td><td data-label="Вердикт"><span class="chip chip-good">Впроваджувати</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: 0 · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-3</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-3: Впроваджувати · Невідомо · відкритих багів: 0 · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-2/medium.html">Нова настройка обмежує ширину тексту у широких терміналах</a> <span class="vendor">claude-code</span></td><td data-label="Вердикт"><span class="chip chip-good">Впроваджувати</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: 0 · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-2</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Впроваджувати · Невідомо · відкритих багів: 0 · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-2/medium.html">Гаряча клавіша миттєвого надсилання зливає чергу повідомлень</a> <span class="vendor">claude-code</span></td><td data-label="Вердикт"><span class="chip chip-good">Впроваджувати</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-2</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Впроваджувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-2/medium.html">Валідатор плагінів тепер виявляє некоректну конфігурацію MCP</a> <span class="vendor">claude-code</span></td><td data-label="Вердикт"><span class="chip chip-info">Спробувати</span></td><td data-label="Чи працює"><span class="chip chip-warn">Працює із застереженнями</span><br><span class="reliability">відкритих багів: 4 · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-2</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Спробувати · Працює із застереженнями · відкритих багів: 4 · виправлень після релізу: 0</li></ol></td></tr><tr><td data-label="Функція"><a href="issues/2026-09-25-od-2/medium.html">Cursor додає боти для перевірки після деплою та безпеки</a> <span class="vendor">cursor</span></td><td data-label="Вердикт"><span class="chip chip-warn">Стежити</span></td><td data-label="Чи працює"><span class="chip chip-neutral">Невідомо</span><br><span class="reliability">відкритих багів: невідомо · виправлень після релізу: 0</span></td><td data-label="Остання зміна">2026-09-25-od-2</td><td data-label="Історія"><ol class="history"><li>2026-09-25-od-2: Стежити · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0</li></ol></td></tr></tbody></table></div></main>
 <footer><p>Оновлено: 2026-09-25.</p></footer>
 </body>
 </html>
