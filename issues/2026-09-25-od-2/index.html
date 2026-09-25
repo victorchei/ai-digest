@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-09-25</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-09-25.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-09-25</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html" aria-current="page">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Anthropic просувалася одразу на двох фронтах: новий флагман (Opus 5.5) з вікном контексту 1M токенів за замовчуванням і рівнем швидкого інференсу для агентних задач, чутливих до затримки, тоді як Claude Code продовжував отримувати дрібні виправлення ергономіки термінала та посилення MCP. Інструменти для розробки загалом рухаються від генерації коду до контролю після мержу: Rollouts і Security Review в Cursor відстежують код після його випуску, а не до. CodeQL від GitHub продовжує розширювати підтримку мов для статичного аналізу. Інструментарій MCP дозріває, але залишається крихким: перевірки валідації з&#x27;являються паралельно з реальною партією відкритих багів у сесіях та OAuth.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Opus 5.5 виходить із контекстом 1M за замовчуванням</a></h3><p>Anthropic випустила Claude Opus 5.5 для довготривалих агентних задач з кодом, з вікном контексту 1M токенів увімкненим за замовчуванням, максимум 128k вихідних токенів і постійно активним адаптивним мисленням, за ціною $4/$20 за MTok.</p><p class="chips"><span class="chip chip-info">Вердикт: Спробувати</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 42</span></p></article><article class="card" aria-labelledby="card-1"><h3 id="card-1"><a href="https://platform.claude.com/docs/en/release-notes/overview">Fast mode вдвічі пришвидшує вивід Opus за додаткову ціну</a></h3><p>Дослідницький preview-режим &#x27;fast mode&#x27; для Opus 5.5, Opus 5 та Opus 4.8 забезпечує до 2.5x більше вихідних токенів за секунду через beta-заголовок, приблизно за подвійною стандартною ціною за токен.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-bad">Чи працює: Сире · відкритих багів: невідомо · виправлень після релізу: 0 · research preview · preview · днів від релізу: 3 · згадок в обговореннях: 72</span></p></article><article class="card" aria-labelledby="card-2"><h3 id="card-2"><a href="https://cursor.com/changelog/rollouts-and-security-reviewer">Cursor додає боти для перевірки після деплою та безпеки</a></h3><p>Cursor запустив двох ботів: Rollouts відстежує розгорнуті зміни за логами/метриками/трейсами для кожного середовища і позначає регресії, а Security Review публікує один коментар до PR щодо вразливостей, які можна експлуатувати, як-от ін&#x27;єкції, обхід автентифікації та секрети.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 16</span></p></article><article class="card" aria-labelledby="card-3"><h3 id="card-3"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Валідатор плагінів тепер виявляє некоректну конфігурацію MCP</a></h3><p><code>claude plugin validate</code> тепер позначає записи в <code>.mcp.json</code>, які мовчки не завантажилися б, незадекларовані посилання <code>${user_config.*}</code> та небезпечні URL.</p><p class="chips"><span class="chip chip-info">Вердикт: Спробувати</span> <span class="chip chip-warn">Чи працює: Працює із застереженнями · відкритих багів: 4 · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 21</span></p></article><article class="card" aria-labelledby="card-4"><h3 id="card-4"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Auto mode за замовчуванням використовує серверний класифікатор моделі</a></h3><p>Auto mode в Claude Code тепер за замовчуванням використовує серверний класифікатор при прямому підключенні до Anthropic API з вимкненою телеметрією; можна відмовитися через <code>CLAUDE_CODE_AUTO_MODE_SERVER=0</code>.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 46</span></p></article><article class="card" aria-labelledby="card-5"><h3 id="card-5"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Гаряча клавіша миттєвого надсилання зливає чергу повідомлень</a></h3><p>Нова комбінація клавіш (<code>ctrl+enter</code> або <code>ctrl+x ctrl+s</code>) перериває поточний хід і одразу надсилає всі повідомлення з черги, показуючи їх сірим кольором, доки Claude їх не отримає.</p><p class="chips"><span class="chip chip-good">Вердикт: Впроваджувати</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 8 · згадок в обговореннях: 12</span></p></article><article class="card" aria-labelledby="card-6"><h3 id="card-6"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Нова настройка обмежує ширину тексту у широких терміналах</a></h3><p>Настройка <code>maxProseWidth</code> обмежує, наскільки широко відображається текст Claude у широких вікнах термінала, тоді як таблиці та блоки коду все ще використовують повну ширину.</p><p class="chips"><span class="chip chip-good">Вердикт: Впроваджувати</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 9</span></p></article></section></main>
+<footer><p>Дата випуску: 2026-09-25. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>

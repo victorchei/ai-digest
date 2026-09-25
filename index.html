@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Claude digest — 2026-09-25</title>
-<meta name="description" content="Claude and Claude Code changes and techniques for 2026-09-25.">
+<title>Дайджест ШІ-інструментів — 2026-09-25</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-09-25.">
 <style>:root {
   color-scheme: light dark;
   --bg: #ffffff;
@@ -16,6 +16,16 @@
   --accent: #0a4fa3;
   --focus: #0a4fa3;
   --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +39,16 @@
     --accent: #7db2ff;
     --focus: #7db2ff;
     --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
   }
 }
 
@@ -95,8 +115,10 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-nav[aria-label="tiers"] ul {
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   list-style: none;
   padding: 0;
@@ -104,7 +126,8 @@ nav[aria-label="tiers"] ul {
   font-size: 0.95rem;
 }
 
-nav[aria-label="tiers"] a[aria-current="page"] {
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
   font-weight: 700;
   color: var(--fg);
   text-decoration: none;
@@ -125,6 +148,99 @@ nav[aria-label="tiers"] a[aria-current="page"] {
 .omitted {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
 }
 
 table {
@@ -186,12 +302,27 @@ footer {
     break-inside: avoid;
   }
 
-  nav[aria-label="tiers"] {
+  nav[aria-label="tiers"],
+  nav.tiers {
     display: none;
   }
 
   a {
     color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
   }
 }
 
@@ -202,8 +333,8 @@ footer {
 </style>
 </head>
 <body>
-<header><h1>Claude digest — 2026-09-25</h1><nav aria-label="tiers"><ul><li><a href="issues/2026-09-25-od/index.html" aria-current="page">Short</a></li><li><a href="issues/2026-09-25-od/medium.html">Medium</a></li><li><a href="issues/2026-09-25-od/full.html">Full</a></li></ul></nav></header>
-<main><section aria-labelledby="what-changed"><h2 id="what-changed">What changed</h2><div class="changelog-group"><h3><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.275–2.1.282</a></h3><ul><li>Added a <code>maxProseWidth</code> setting that caps the width of Claude&#x27;s prose in wide terminals while tables and code blocks keep the full width</li><li>Added a startup notice, and <code>/status</code> and <code>claude doctor</code> entries, listing telemetry variables in a project&#x27;s settings files that were ignored or that turned telemetry off</li><li>Added a scrollbar to the <code>/feedback</code> drafts list in fullscreen mode; it appears while the mouse is over the list</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">559 more changes not shown</a></p></div><div class="changelog-group"><h3><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul><li>We&#x27;re expanding which refusals are billed to include refusals that arrive before any output when <code>stop_details.category</code> is <code>&quot;bio&quot;</code>, <code>&quot;frontier_llm&quot;</code>, or <code>&quot;reasoning_extraction&quot;</code>, the categories where we measure low volumes of false positives. Mid-stream refusals were already billed. The newly billed refusals are charged like any other request, at the rates of the model that ran it.</li><li><a href="https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics">Cache diagnostics</a> is out of beta on the Claude API and no longer requires the <code>cache-diagnosis-2026-04-07</code> beta header. Include the <code>diagnostics</code> object on a Messages request to opt in; requests that still send the header work as before. Responses from <code>POST /v1/messages</code> now always include the <code>diagnostics</code> field, which is <code>null</code> when the request did not include the <code>diagnostics</code> object.</li><li>We&#x27;ve launched <strong>Claude Opus 5.5</strong> (<code>claude-opus-5-5</code>), a model for long-running agentic coding and knowledge work. It has a <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">1M token context window</a> by default, 128k max output tokens, and always-on <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">adaptive thinking</a>, at $4 / $20 USD per MTok (Claude Opus 5 is $5 / $25).</li></ul><p class="omitted"><a href="https://platform.claude.com/docs/en/release-notes/overview">5 more changes not shown</a></p></div><div class="changelog-group"><h3><a href="https://github.com/anthropics/claude-agent-sdk-python/releases.atom">Claude Agent SDK (Python) releases</a></h3><ul><li>v0.2.158: <code>verbatim_prompts</code> option: Added <code>ClaudeAgentOptions.verbatim_prompts</code> (default <code>False</code>). When <code>True</code>, user messages are delivered to the CLI exactly as written — no <code>@path</code> file expansion and no slash-command dispatch. This prevents untrusted text inlined into prompts from triggering unintended file reads or command execution. Works with <code>query()</code>, <code>ClaudeSDKClient.connect()</code>, and <code>ClaudeSDKClient.query()</code> for both string and async-iterable prompts.</li></ul></div><div class="changelog-group"><h3><a href="https://support.claude.com/en/articles/12138966-release-notes">Claude Apps release notes</a></h3><ul><li>Claude Opus 5.5 launch</li><li>We just launched Claude Opus 5.5, the first model in our new Claude 5.5 family. It performs at the level of Claude Fable 5.1 on most work and costs 40% less to run than Opus 5. For more information, see our blog post: Introducing Claude Opus 5.5.</li></ul></div></section><section aria-labelledby="try-this"><h2 id="try-this">Try this</h2><div class="pick"><h3><a href="https://simonwillison.net/2026/Sep/18/thariq-shihipar/">Quoting Thariq Shihipar</a></h3><p>Claude Code now checks AGENTS.md if CLAUDE.md is absent for project instructions.</p></div><div class="pick"><h3><a href="https://github.com/anthropics/claude-cookbooks/commit/a4b0d89061bc65769fea7947c080b3b11d938515">Add multi-agent teams under latency pressure and budgets cookbook (#885)</a></h3><p>New cookbook for multi-agent teams balancing latency constraints and execution budgets.</p></div><div class="pick"><h3><a href="https://github.com/anthropics/claude-cookbooks/commit/813fbeec03cdedfda7808529438d1c7af71f26eb">Tag cookbook agents with anthropic_cookbook metadata (#886)</a></h3><p>Cookbook agents now tagged with anthropic_cookbook metadata for session attribution.</p></div></section><section aria-labelledby="archive"><h2 id="archive">Archive</h2><table><thead><tr><th>Date</th><th>On demand</th><th>Changes</th><th>Picks</th></tr></thead><tbody><tr><td><a href="issues/2026-09-25-od/index.html">2026-09-25</a></td><td>yes</td><td>181</td><td>3</td></tr></tbody></table></section></main>
-<footer><p>Issue date: 2026-09-25. Sources are linked on every item.</p></footer>
+<header><h1>Дайджест ШІ-інструментів — 2026-09-25</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="issues/2026-09-25-od-2/index.html" aria-current="page">Огляд</a></li><li><a href="issues/2026-09-25-od-2/medium.html">Детально</a></li><li><a href="issues/2026-09-25-od-2/full.html">Повністю</a></li><li><a href="radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Anthropic просувалася одразу на двох фронтах: новий флагман (Opus 5.5) з вікном контексту 1M токенів за замовчуванням і рівнем швидкого інференсу для агентних задач, чутливих до затримки, тоді як Claude Code продовжував отримувати дрібні виправлення ергономіки термінала та посилення MCP. Інструменти для розробки загалом рухаються від генерації коду до контролю після мержу: Rollouts і Security Review в Cursor відстежують код після його випуску, а не до. CodeQL від GitHub продовжує розширювати підтримку мов для статичного аналізу. Інструментарій MCP дозріває, але залишається крихким: перевірки валідації з&#x27;являються паралельно з реальною партією відкритих багів у сесіях та OAuth.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Opus 5.5 виходить із контекстом 1M за замовчуванням</a></h3><p>Anthropic випустила Claude Opus 5.5 для довготривалих агентних задач з кодом, з вікном контексту 1M токенів увімкненим за замовчуванням, максимум 128k вихідних токенів і постійно активним адаптивним мисленням, за ціною $4/$20 за MTok.</p><p class="chips"><span class="chip chip-info">Вердикт: Спробувати</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 42</span></p></article><article class="card" aria-labelledby="card-1"><h3 id="card-1"><a href="https://platform.claude.com/docs/en/release-notes/overview">Fast mode вдвічі пришвидшує вивід Opus за додаткову ціну</a></h3><p>Дослідницький preview-режим &#x27;fast mode&#x27; для Opus 5.5, Opus 5 та Opus 4.8 забезпечує до 2.5x більше вихідних токенів за секунду через beta-заголовок, приблизно за подвійною стандартною ціною за токен.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-bad">Чи працює: Сире · відкритих багів: невідомо · виправлень після релізу: 0 · research preview · preview · днів від релізу: 3 · згадок в обговореннях: 72</span></p></article><article class="card" aria-labelledby="card-2"><h3 id="card-2"><a href="https://cursor.com/changelog/rollouts-and-security-reviewer">Cursor додає боти для перевірки після деплою та безпеки</a></h3><p>Cursor запустив двох ботів: Rollouts відстежує розгорнуті зміни за логами/метриками/трейсами для кожного середовища і позначає регресії, а Security Review публікує один коментар до PR щодо вразливостей, які можна експлуатувати, як-от ін&#x27;єкції, обхід автентифікації та секрети.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 16</span></p></article><article class="card" aria-labelledby="card-3"><h3 id="card-3"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Валідатор плагінів тепер виявляє некоректну конфігурацію MCP</a></h3><p><code>claude plugin validate</code> тепер позначає записи в <code>.mcp.json</code>, які мовчки не завантажилися б, незадекларовані посилання <code>${user_config.*}</code> та небезпечні URL.</p><p class="chips"><span class="chip chip-info">Вердикт: Спробувати</span> <span class="chip chip-warn">Чи працює: Працює із застереженнями · відкритих багів: 4 · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 21</span></p></article><article class="card" aria-labelledby="card-4"><h3 id="card-4"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Auto mode за замовчуванням використовує серверний класифікатор моделі</a></h3><p>Auto mode в Claude Code тепер за замовчуванням використовує серверний класифікатор при прямому підключенні до Anthropic API з вимкненою телеметрією; можна відмовитися через <code>CLAUDE_CODE_AUTO_MODE_SERVER=0</code>.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 46</span></p></article><article class="card" aria-labelledby="card-5"><h3 id="card-5"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Гаряча клавіша миттєвого надсилання зливає чергу повідомлень</a></h3><p>Нова комбінація клавіш (<code>ctrl+enter</code> або <code>ctrl+x ctrl+s</code>) перериває поточний хід і одразу надсилає всі повідомлення з черги, показуючи їх сірим кольором, доки Claude їх не отримає.</p><p class="chips"><span class="chip chip-good">Вердикт: Впроваджувати</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 8 · згадок в обговореннях: 12</span></p></article><article class="card" aria-labelledby="card-6"><h3 id="card-6"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Нова настройка обмежує ширину тексту у широких терміналах</a></h3><p>Настройка <code>maxProseWidth</code> обмежує, наскільки широко відображається текст Claude у широких вікнах термінала, тоді як таблиці та блоки коду все ще використовують повну ширину.</p><p class="chips"><span class="chip chip-good">Вердикт: Впроваджувати</span> <span class="chip chip-neutral">Чи працює: Невідомо · відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 9</span></p></article></section><section aria-labelledby="archive"><h2 id="archive">Архів</h2><table><thead><tr><th scope="col">Дата</th><th scope="col">На запит</th><th scope="col">Зміни</th><th scope="col">Картки</th></tr></thead><tbody><tr><td><a href="issues/2026-09-25-od/index.html">2026-09-25</a></td><td>так</td><td>181</td><td></td></tr><tr><td><a href="issues/2026-09-25-od-2/index.html">2026-09-25</a></td><td>так</td><td>275</td><td>7</td></tr></tbody></table></section></main>
+<footer><p>Дата випуску: 2026-09-25. Джерела вказано в кожному матеріалі.</p></footer>
 </body>
 </html>
