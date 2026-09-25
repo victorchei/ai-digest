@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude digest — 2026-09-25</title>
+<meta name="description" content="Claude and Claude Code changes and techniques for 2026-09-25.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"] {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Claude digest — 2026-09-25</h1><nav aria-label="tiers"><ul><li><a href="index.html">Short</a></li><li><a href="medium.html" aria-current="page">Medium</a></li><li><a href="full.html">Full</a></li></ul></nav></header>
+<main><section aria-labelledby="what-changed"><h2 id="what-changed">What changed</h2><div class="changelog-group"><h3><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.275–2.1.282</a></h3><ul><li>Added a <code>maxProseWidth</code> setting that caps the width of Claude&#x27;s prose in wide terminals while tables and code blocks keep the full width</li><li>Added a startup notice, and <code>/status</code> and <code>claude doctor</code> entries, listing telemetry variables in a project&#x27;s settings files that were ignored or that turned telemetry off</li><li>Added a scrollbar to the <code>/feedback</code> drafts list in fullscreen mode; it appears while the mouse is over the list</li><li>Added <code>&quot;attribution&quot;: false</code> in <code>settings.json</code> to hide all commit and PR attribution; older CLI versions skip a settings file that holds it, so keep the object form in files shared across versions</li><li>Added MCP URL-mode elicitation on 2026-07-28 protocol connections, so servers can ask Claude Code to open a browser-based flow; no waiting dialog is left on screen when the server has no way to confirm completion</li><li>Added MCP server checks to <code>claude plugin validate</code>: it reports <code>.mcp.json</code> entries that would be silently dropped at load, undeclared <code>${user_config.*}</code> references, and insecure URLs</li><li>Added an auto mode recommendation to <code>/insights</code> that estimates how many permission prompts auto mode could have handled in your recent sessions</li><li>Added a scrollbar to the <code>/skills</code>, <code>/mcp</code> and <code>/plugin</code> Installed lists in fullscreen mode, like the one <code>/workflows</code> now has: it appears while the mouse is over the list and can be clicked or dragged</li><li>Added a Continue/Stop prompt in the VS Code and JetBrains panels when auto mode falls back to billed classifier requests, replacing the unanswerable warning line</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">553 more changes not shown</a></p></div><div class="changelog-group"><h3><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul><li>We&#x27;re expanding which refusals are billed to include refusals that arrive before any output when <code>stop_details.category</code> is <code>&quot;bio&quot;</code>, <code>&quot;frontier_llm&quot;</code>, or <code>&quot;reasoning_extraction&quot;</code>, the categories where we measure low volumes of false positives. Mid-stream refusals were already billed. The newly billed refusals are charged like any other request, at the rates of the model that ran it.</li><li><a href="https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics">Cache diagnostics</a> is out of beta on the Claude API and no longer requires the <code>cache-diagnosis-2026-04-07</code> beta header. Include the <code>diagnostics</code> object on a Messages request to opt in; requests that still send the header work as before. Responses from <code>POST /v1/messages</code> now always include the <code>diagnostics</code> field, which is <code>null</code> when the request did not include the <code>diagnostics</code> object.</li><li>We&#x27;ve launched <strong>Claude Opus 5.5</strong> (<code>claude-opus-5-5</code>), a model for long-running agentic coding and knowledge work. It has a <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">1M token context window</a> by default, 128k max output tokens, and always-on <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">adaptive thinking</a>, at $4 / $20 USD per MTok (Claude Opus 5 is $5 / $25).</li><li>On Claude Opus 5.5, thinking can&#x27;t be disabled: <code>thinking: {&quot;type&quot;: &quot;disabled&quot;}</code> and <code>thinking: {&quot;type&quot;: &quot;enabled&quot;, ...}</code> return a 400 error. Omit the <code>thinking</code> field and control thinking depth with the <a href="https://platform.claude.com/docs/en/build-with-claude/effort">effort parameter</a>. <code>tool_choice</code> types <code>any</code> and <code>tool</code> also return a 400 error, as on Claude Fable 5.1; use <code>auto</code> with <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use">strict tool use</a>.</li><li><a href="https://platform.claude.com/docs/en/build-with-claude/fast-mode">Fast mode</a> (research preview) is available for Claude Opus 5.5 on the Claude API.</li><li>Tools can now be defined inside a <a href="https://platform.claude.com/docs/en/build-with-claude/mid-conversation-system-messages#define-tools-in-a-message-beta">mid-conversation system message</a>, in beta on the Claude API with the <code>inline-tools-2026-09-15</code> beta header.</li><li>For <a href="https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics">cache diagnostics</a>, a response to a request that sends the <code>cache-diagnosis-2026-04-07</code> beta header now always includes the <code>diagnostics</code> field. The field is <code>null</code> when the request did not include the <code>diagnostics</code> object. Previously the field was omitted in that case.</li></ul><p class="omitted"><a href="https://platform.claude.com/docs/en/release-notes/overview">1 more change not shown</a></p></div><div class="changelog-group"><h3><a href="https://github.com/anthropics/claude-agent-sdk-python/releases.atom">Claude Agent SDK (Python) releases</a></h3><ul><li>v0.2.158: <code>verbatim_prompts</code> option: Added <code>ClaudeAgentOptions.verbatim_prompts</code> (default <code>False</code>). When <code>True</code>, user messages are delivered to the CLI exactly as written — no <code>@path</code> file expansion and no slash-command dispatch. This prevents untrusted text inlined into prompts from triggering unintended file reads or command execution. Works with <code>query()</code>, <code>ClaudeSDKClient.connect()</code>, and <code>ClaudeSDKClient.query()</code> for both string and async-iterable prompts.</li></ul></div><div class="changelog-group"><h3><a href="https://support.claude.com/en/articles/12138966-release-notes">Claude Apps release notes</a></h3><ul><li>Claude Opus 5.5 launch</li><li>We just launched Claude Opus 5.5, the first model in our new Claude 5.5 family. It performs at the level of Claude Fable 5.1 on most work and costs 40% less to run than Opus 5. For more information, see our blog post: Introducing Claude Opus 5.5.</li></ul></div></section><section aria-labelledby="try-this"><h2 id="try-this">Try this</h2><div class="pick"><h3><a href="https://simonwillison.net/2026/Sep/18/thariq-shihipar/">Quoting Thariq Shihipar</a></h3><p>Claude Code 2.1.277+ supports AGENTS.md as a fallback instruction file when CLAUDE.md doesn&#x27;t exist. This feature builds on Claude Code mods, a customization framework that lets you modify the Claude Code harness behavior. The AGENTS.md support is itself a built-in mod, with capability to create custom mods.</p><p class="try-this">Create AGENTS.md in a project folder without CLAUDE.md to test instruction loading in Claude Code.</p></div><div class="pick"><h3><a href="https://github.com/anthropics/claude-cookbooks/commit/a4b0d89061bc65769fea7947c080b3b11d938515">Add multi-agent teams under latency pressure and budgets cookbook (#885)</a></h3><p>A cookbook pattern demonstrates building lead-and-helpers agent teams that coordinate within a shared wall-clock budget. Two approaches included: time-aware prompting and explicit latency budgets on the timing mechanism. Useful for systems where multiple agents must cooperate under performance constraints.</p><p class="try-this">Review the cookbook to understand how to structure agent prompts and budget tracking for coordinated multi-agent workflows.</p></div><div class="pick"><h3><a href="https://github.com/anthropics/claude-cookbooks/commit/813fbeec03cdedfda7808529438d1c7af71f26eb">Tag cookbook agents with anthropic_cookbook metadata (#886)</a></h3><p>Managed Agents notebooks now pass metadata tagging each agents.create call with its cookbook source (format: lowercase repo/name). Sessions inherit the tag automatically. API validation ensures only properly formatted tags persist. Test coverage added to verify every agent creation carries the correct attribution tag.</p><p class="try-this">Add metadata={&quot;anthropic_cookbook&quot;: &quot;claude-cookbooks/notebook-name&quot;} to agents.create calls in your notebooks.</p></div></section></main>
+<footer><p>Issue date: 2026-09-25. Sources are linked on every item.</p></footer>
+</body>
+</html>
