@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-09-29</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-09-29.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-09-29</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html" aria-current="page">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Anthropic випустила Claude Sonnet 5.5 зі змінами в API, що ламають зворотну сумісність, а GitHub Copilot додав її протягом доби. Робота над Claude Code зосередилася на експлуатації налаштувань агентів: масове перепідключення MCP, аудит промптів, написаних для старіших моделей, і окремий перемикач Ultracode. Agent SDK виправляють проблеми життєвого циклу навколо фонових subagents. Codex посилив MCP OAuth і поведінку пісочниці. Ollama додала нетекстові моделі прийняття рішень для класифікації та маршрутизації.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0">Claude Sonnet 5.5 виходить із п&#x27;ятьма змінами в API, що ламають сумісність</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Sonnet 5.5 (<code>claude-sonnet-5-5</code>) доступна в Claude API, Bedrock, Google Cloud і Foundry, а також у GitHub Copilot. Код, написаний для Sonnet 5, може перестати працювати: змінилися правила для thinking, примусового використання інструментів, computer use та advisor.</p></dd><dt>Чому це важливо</dt><dd><p>GitHub повідомляє, що на завданнях із кодування вона не поступається Sonnet 5, але потребує менше кроків, токенів і викликів інструментів. Ціна цього — робота з міграції: <code>thinking: disabled</code> і примусовий <code>tool_choice</code> тепер повертають помилки 400.</p></dd><dt>Можливості</dt><dd><p>Дешевші та швидші щоденні агенти, якщо твердження про ефективність підтвердиться на ваших навантаженнях. Це також хороша навчальна вправа з міграції для студентів: порівняти структуру запитів між двома версіями моделі й виправити кожну помилку.</p></dd><dt>Як використати</dt><dd><p>Перед переходом замініть <code>thinking: {&quot;type&quot;: &quot;disabled&quot;}</code> на <code>{&quot;type&quot;: &quot;between_tools&quot;}</code> (з високим рівнем effort або нижчим). Приберіть типи <code>tool_choice</code> <code>any</code> і <code>tool</code>; залиште <code>auto</code> і використовуйте <code>strict: true</code>. Якщо ви передаєте текст потоком між викликами інструментів, перевірте, що він і далі відображається, адже тепер він повертається в блоках thinking.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 23</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Випущена один день тому, надійність невідома; зміни, що ламають сумісність, задокументовані, тож перед міграцією протестуйте на копії свого коду.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes · 2026-09-28</a></li><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-09-28</a></li><li><a href="https://github.blog/changelog/2026-09-28-claude-sonnet-5-5-in-github-copilot">Claude Sonnet 5.5 in GitHub Copilot · GitHub Changelog</a></li><li><a href="https://github.blog/changelog/2026-09-25-github-copilot-weekly-releases-september-21">GitHub Copilot weekly releases — September 21 · GitHub Changelog</a></li><li><a href="https://support.claude.com/en/articles/12138966-release-notes">Claude Apps release notes · 2026-09-28</a></li><li><a href="https://simonwillison.net/2026/Sep/28/claude-sonnet-5-5/">Claude Sonnet 5.5 · Simon Willison — everything</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-1"><h3 id="card-1"><code>/doctor prompt-audit</code> виявляє застарілі патерни написання промптів</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Claude Code може перевіряти файли CLAUDE.md, skills, агентів і команди на патерни промптів, написані для старіших моделей, за допомогою <code>/doctor prompt-audit</code> або <code>/checkup prompt-audit</code>.</p></dd><dt>Чому це важливо</dt><dd><p>Інструкції накопичуються протягом поколінь моделей, а старі обхідні прийоми можуть шкодити новішим моделям. Це дає систематичну перевірку там, де раніше доводилося переглядати вручну.</p></dd><dt>Можливості</dt><dd><p>Регулярна гігієна бібліотек skills і subagents та навчальний приклад того, як старіють промпти. Запускайте після кожної зміни моделі, наприклад після переходу на Sonnet 5.5.</p></dd><dt>Як використати</dt><dd><p>Запустіть <code>/doctor prompt-audit</code> у проєкті зі skills і агентами, а потім вручну перегляньте кожну знахідку перед редагуванням. Зауважте, що серед відкритих багів є повідомлення про те, що перевірки CLAUDE.md у <code>/doctor</code> пропускають вміст AGENTS.md, тож не розраховуйте на повне покриття.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-bad">Сире</span></p><p class="reliability">відкритих багів: 41 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 2</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/anthropics/claude-code/issues/97999">[BUG] CLAUDE.md rules not enforced across sessions</a></li><li><a href="https://github.com/anthropics/claude-code/issues/97261">/doctor&#x27;s CLAUDE.md checks skip AGENTS.md content</a></li><li><a href="https://github.com/anthropics/claude-code/issues/98052">Worktree-isolated subagents load the project CLAUDE.md (and its @imports) twice; the only workaround exclude pattern that doesn&#x27;t drop subfolder CLAUDE.md files is non-obvious</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Позначка raw, 41 відкритий баг, випуску чотири дні; корисно лише як довідковий результат.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-09-25</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-2"><h3 id="card-2"><code>/mcp reconnect all</code> повторює підключення до кожного MCP server, що не підключився</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Нова команда в інтерактивному терміналі одним кроком повторює спробу підключення до кожного MCP server, який не зміг підключитися або потребує автентифікації.</p></dd><dt>Чому це важливо</dt><dd><p>Раніше після обриву мережі чи завершення терміну дії входу кожен сервер доводилося обробляти окремо. Одна команда зменшує це тертя в налаштуваннях із багатьма серверами.</p></dd><dt>Можливості</dt><dd><p>Зручніша щоденна робота з кількома MCP servers і простіший крок відновлення, який легко показати, демонструючи налаштування MCP.</p></dd><dt>Як використати</dt><dd><p>Якщо сесія почалася з помилок, виконайте <code>/mcp reconnect all</code> і перевірте <code>/mcp</code>, щоб побачити сервери, що залишилися. Для серверів, які потребують автентифікації, вхід усе одно доведеться завершити вам.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 7</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Невелика зручна команда з низьким ризиком; надійність невідома після одного дня, але невдала повторна спроба нічого не коштує.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-09-28</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-3"><h3 id="card-3">Ultracode стає окремим перемикачем у <code>/effort</code></h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Ultracode більше не примусово встановлює xhigh effort. Це окремий перемикач у <code>/effort</code> (Tab або <code>/effort ultracode [on|off]</code>), який залишається ввімкненим на будь-якому рівні effort.</p></dd><dt>Чому це важливо</dt><dd><p>Тепер Ultracode можна поєднувати з нижчими рівнями effort, відокремивши цей вибір від глибини thinking.</p></dd><dt>Можливості</dt><dd><p>Налаштовуйте вартість і швидкість під кожне завдання: дешевший effort для рутинних правок із увімкненим Ultracode, якщо цей режим підходить для роботи.</p></dd><dt>Як використати</dt><dd><p>Відкрийте <code>/effort</code>, натисніть Tab для перемикання або виконайте <code>/effort ultracode on</code>. Рівень effort задайте окремо. Перевірте, що effort застосовується, оскільки відкриті баги повідомляють, що <code>--effort</code> ігнорується разом із <code>--cloud</code>, а <code>effort</code> у frontmatter агента ігнорується на шляху <code>--agent</code>.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-warn">Працює із застереженнями</span></p><p class="reliability">відкритих багів: 5 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 6</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/anthropics/claude-code/issues/97738">claude --cloud silently ignores --effort (model is forwarded, effort is not)</a></li><li><a href="https://github.com/anthropics/claude-code/issues/97829">[BUG] Agent frontmatter `effort` is still ignored on the `--agent` session path (2.1.283) — follow-up to #81677</a></li><li><a href="https://github.com/anthropics/claude-code/issues/97888">[BUG]  hasTrustDialogAccepted reverts to false for previously-trusted, actively-used projects (macOS, 2.1.283)</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Позначка caveats, 5 відкритих багів, зокрема ігнорування налаштувань effort на деяких шляхах.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-09-28</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-4"><h3 id="card-4">Agent SDK Python виправляє збої наступних ходів після фонових subagents</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Версія 0.2.160 тримає stdin відкритим, доки CLI не повідомить про простій, що усуває помилки «Stream closed» на наступних ходах при використанні hooks, <code>can_use_tool</code> або SDK MCP servers. До неї входить CLI 2.1.283.</p></dd><dt>Чому це важливо</dt><dd><p>Через цей баг model повідомляла, що інструменти відхилено, коли subagent завершувався безпосередньо перед результатом. Тепер поведінка збігається з TypeScript SDK.</p></dd><dt>Можливості</dt><dd><p>Надійніші багатоходові автоматизації, що поєднують subagents із hooks або внутрішньопроцесними інструментами MCP.</p></dd><dt>Як використати</dt><dd><p>Оновіть командою <code>pip install claude-agent-sdk==0.2.160</code>. Верхню межу очікування можна налаштувати через <code>CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS</code> (за замовчуванням 10 хвилин). Старіші CLI без подій стану зберігають стару поведінку.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 4</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Цілеспрямоване виправлення з 0 відкритих багів і 0 подальших виправлень, хоча позначка невідома.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.160">Claude Agent SDK (Python) releases · 2026-09-25</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-5"><h3 id="card-5">Ollama v0.35.0 додає моделі прийняття рішень, що повертають ймовірності</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Новий endpoint <code>/v1/systemone</code> обслуговує моделі прийняття рішень, як-от Nimble і Tev1. Вони повертають варіанти вибору, ймовірності та оцінки замість тексту — для тріажу, маршрутизації та класифікації.</p></dd><dt>Чому це важливо</dt><dd><p>Класифікація зазвичай означає промптинг чат-моделі та розбір тексту. Тут ви отримуєте ймовірності для кожного варіанта та рівень впевненості від локальної моделі одним викликом.</p></dd><dt>Можливості</dt><dd><p>Безкоштовний локальний тріаж тікетів, маршрутизація між моделями або маркування контенту в автоматизаціях. Значення впевненості дають змогу передавати сумнівні випадки потужнішій моделі.</p></dd><dt>Як використати</dt><dd><p>Виконайте <code>ollama pull nimble</code>, а потім надішліть POST на <code>/v1/systemone</code> із <code>model</code>, <code>state</code> і <code>questions</code> типу <code>choice</code> або з типом оцінки. Задайте поріг впевненості у своєму скрипті. Реліз позначено як pre-release.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 0 · згадок в обговореннях: 3</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Позначено як pre-release, віком нуль днів, надійність невідома; дочекайтеся стабільного релізу, перш ніж на нього покладатися.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/ollama/ollama/releases/tag/v0.35.0">v0.35.0 · Ollama releases</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-6"><h3 id="card-6">Codex 0.158.0 додає клієнтські секрети MCP OAuth і виправлення пісочниці</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Codex може підключатися до MCP servers, які потребують попередньо зареєстрованих клієнтських секретів OAuth, за допомогою <code>codex mcp add --oauth-client-secret</code>. Також додано копіювання при виділенні в TUI та виправлено проблеми пісочниці у Windows і Linux.</p></dd><dt>Чому це важливо</dt><dd><p>Деякі хостингові MCP servers вимагали попередньо зареєстрованих облікових даних OAuth, які клієнти не могли надати. Це звужує прогалину для серверів з автентифікацією.</p></dd><dt>Можливості</dt><dd><p>Корисно, якщо ви створюєте MCP servers із попередньо зареєстрованими клієнтами OAuth і хочете протестувати їх у кількох агентах.</p></dd><dt>Як використати</dt><dd><p>Спробуйте <code>codex mcp add --oauth-client-secret</code> на власному MCP server, захищеному OAuth, як міжклієнтний тест вашого сервера.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-bad">Сире</span></p><p class="reliability">відкритих багів: 62 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 3</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/openai/codex/issues/49108">macOS: Custom notification sounds require Full Disk Access</a></li><li><a href="https://github.com/openai/codex/issues/48855">[macOS] Settings layout breaks with ⌘, when chat history is collapsed</a></li><li><a href="https://github.com/openai/codex/issues/49018">[macOS Desktop] Voice recording animation missing when answering a clarification question</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Позначка raw, 62 відкриті баги, випуску один день; актуально лише якщо ви користуєтеся Codex.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/openai/codex/releases/tag/rust-v0.158.0">0.158.0 · OpenAI Codex CLI releases</a></li></ul></dd></dl></article></section><section aria-labelledby="lesson"><h2 id="lesson">Урок тижня</h2><h3>Як безпечно мігрувати код при зміні версії моделі</h3><p>Нові версії моделей часто змінюють правила запитів, а не лише якість. Sonnet 5.5 це показує: <code>thinking: disabled</code> тепер повертає помилку 400, а замість нього діє <code>between_tools</code>. Примусовий <code>tool_choice</code> (<code>any</code>, <code>tool</code>) спричиняє помилки. Блоки thinking прив&#x27;язані до моделі, яка їх створила, тож перенесення розмови на іншу модель може непомітно втратити міркування. Текст між викликами інструментів тепер повертається в блоках thinking, тому інтерфейс зі стрімінгом може замовкнути без жодної помилки. Прийом — це чекліст міграції. Спочатку перелічіть кожен параметр запиту, який надсилає ваш код. Потім порівняйте кожен із задокументованими правилами нової моделі. Помилки виявити легко: API повідомляє про них. Небезпечні тихі зміни, тому проженіть одну реальну розмову від початку до кінця й порівняйте результат зі старою моделлю, особливо стрімінговий текст. Тримайте ID моделі в одному конфігураційному значенні, щоб можна було перемикатися й відкочуватися. Змінюйте щось одне за раз.</p><h4>Вправа на 15 хвилин</h4><p>Оберіть невеликий скрипт, що викликає API. Винесіть ID моделі в одну константу. Знайдіть через grep <code>thinking</code> і <code>tool_choice</code>. Порівняйте кожен випадок із наведеними вище правилами Sonnet 5.5, виправте ті, що повернуть 400, і запустіть одну розмову з використанням інструментів, перевіряючи, що стрімінговий текст досі з&#x27;являється між викликами інструментів.</p><ul class="sources"><li><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes · 2026-09-28</a></li></ul></section><section aria-labelledby="brief"><h2 id="brief">Коротко</h2><ul class="brief"><li><a href="https://www.latent.space/p/ainews-amd-buys-world-labs-for-82b">[AINews] AMD buys World Labs for $8.2B, as Atlas solves sparse reconstruction problem for robotics, design and more · Latent Space</a> — AMD, за повідомленнями, купує World Labs за $8.2B, з результатом розрідженої реконструкції для робототехніки та дизайну; текст матеріалу — лише вітання, тож подробиці не підтверджені.</li></ul></section><section aria-labelledby="all-changes"><h2 id="all-changes">Усі зміни</h2><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.283–2.1.284</a></h3><ul lang="en"><li>Added Claude Sonnet 5.5 (<code>claude-sonnet-5-5</code>), now the default Sonnet model on the Anthropic API — 1M context, $2/$10 per Mtok with $0.20/Mtok cache reads</li><li>Added a &quot;Yes, but ask again next time&quot; answer to auto mode&#x27;s prompt before a read outside the working directories, so you can allow that one read and still be asked about later ones</li><li>Added <code>effortSlider:decreaseEffort</code>, <code>increaseEffort</code> and <code>toggleUltracode</code> keybinding actions, so the <code>/effort</code> slider&#x27;s arrow and Tab keys can be rebound in <code>keybindings.json</code></li><li>Added <code>/rate-limit-options</code> to <code>/help</code> and the command menu for claude.ai subscribers, so the usage-limit notices that mention it point to a command you can find</li><li>Added <code>/mcp reconnect all</code> in the interactive terminal to retry every MCP server that failed to connect or needs authentication at once</li><li>Added an optional time above each prompt and response, with a date line where the day changes (Claude Code: Show Message Timestamps setting, off by default)</li><li>Added plugin load errors and notes to the Manage plugins rows, with a popup to disable, uninstall or copy the error</li><li>Added an Ultracode on/off switch under the Effort slider, replacing the slider&#x27;s Ultracode stop; the model pill shows &quot;· Ultracode&quot; at any effort level</li><li>Added model family choices such as &quot;Opus (latest)&quot; for a thread, a channel default or your DM, so the choice follows the newest model in that family</li><li>Added the spend that counts toward your organization-wide limit to the analytics spend projection chart, with how much of the limit is used</li><li>Added MCP tool, WebFetch and WebSearch outputs to the <code>tool.output</code> OpenTelemetry span event when <code>OTEL_LOG_TOOL_CONTENT=1</code></li><li>Added <code>/doctor prompt-audit</code> (also <code>/checkup prompt-audit</code>) to audit your CLAUDE.md files, skills, agents and commands for prompting patterns written for older models</li><li>Added click-to-expand for truncated messages from your other sessions in fullscreen mode</li><li>Added <code>path</code> to <code>--plugin-dir</code> load-failure entries in the stream-json <code>system/init</code> <code>plugin_errors</code>, naming the directory that did not load</li><li>Added a &quot;Channels Claude can search&quot; admin setting that limits Claude&#x27;s Slack search to public channels it has been added to, set per organization, workspace or channel</li><li>Added a Back to Slack button on the page shown after connecting your Claude account, returning you to the thread you started from</li><li>Changed interactive terminal and VS Code sessions to start in auto mode when no permission mode is configured, on every plan and provider; <code>permissions.defaultMode</code> still overrides it</li><li>Changed Ultracode into its own toggle in <code>/effort</code> (Tab, or <code>/effort ultracode [on|off]</code>): it no longer forces xhigh effort and stays on at any effort level</li><li>Changed retries after a dropped connection mid-response to share one budget with the rest of the request&#x27;s retries, so a failing request gives up sooner</li><li>Changed the notice shown when a Sonnet model&#x27;s safeguards flag a message to explain why it happened and to offer editing and retrying</li><li>Changed safety-related model switches in sessions that pin an Opus model with <code>ANTHROPIC_DEFAULT_OPUS_MODEL</code> or <code>modelOverrides</code>: on the Anthropic API, the API now picks the model to switch to for each kind of flag, not the pinned model</li><li>Changed the non-interactive first turn to still wait up to 2s for connecting MCP servers named by <code>--allowedTools</code> or an <code>mcp_tool</code> hook, even when <code>CLAUDE_CODE_MCP_STARTUP_WAIT_MS</code> is <code>0</code></li><li>Changed <code>/recap</code> to decline with a short notice when it arrives relayed from a chat thread (your own included) or from a routine or webhook; typed in the terminal, the Claude apps, Remote Control, <code>-p</code> or an SDK host, it runs as before</li><li>Changed <code>/artifacts</code> to show its filter tabs beside the title with one-word labels (All, Mine, Shared), using the same tab bar as <code>/config</code> and <code>/plugin</code></li><li>Changed artifact publishing to refuse a file on a network share (a <code>\\host\share</code> path or a <code>/net</code> automount) unless it is on a mapped network drive added with <code>--add-dir</code></li><li>Changed <code>CLAUDE_CONFIG_DIR</code> in the <code>claudeCode.environmentVariables</code> setting to apply only when it is an absolute path, and passed it to terminals that continue the chat</li><li>Changed Claude to post its private sign-in notice at every @mention from someone who hasn&#x27;t connected their Claude account, instead of going quiet after the first</li><li>Changed interactive sessions on third-party providers or with telemetry off to start in auto mode when no permission mode is configured; <code>permissions.defaultMode</code> still overrides it</li><li>Changed the <code>/ultrareview</code> launch dialog to say that reviewing a local branch may upload uncommitted changes to tracked files</li><li>Changed the <code>/model</code> picker&#x27;s Opus row and the Default model&#x27;s name to drop &quot;(1M context)&quot; where Opus already has a 1M context window; the window is unchanged</li><li>Changed prompt suggestions in the terminal to appear less often after 20 in a row go unused; using one brings them back</li><li>Changed <code>--system-prompt</code> and <code>--append-system-prompt</code> to accept their text and <code>-file</code> forms together; the file&#x27;s text comes first</li><li>Changed <code>Skill(anthropic-skills:&lt;name&gt;)</code> deny rules to also block that skill when Claude Desktop delivers it as a plugin, and <code>Skill(skill:&lt;name&gt;)</code> denies to match the skill&#x27;s alias and display name</li><li>Changed <code>/rewind</code> and <code>/diff</code> lists to move on the same keybinding actions as every other list (<code>select:*</code>); <code>messageSelector:*</code>/<code>diff:*</code> rebinds still work</li><li>Changed the <code>/workflows</code> run list to size itself like other lists: half the terminal inline, and it keeps its title on screen when the prompt shows below</li><li>Changed <code>claude plugin eval</code> to require git 2.31 or later when git is installed; a run on an older git is refused with a message naming the version</li><li>Changed artifact watching: a watch that was armed automatically (not one you asked for) now ends after 3.5 hours with no activity; publishing or watching the artifact again re-arms it</li><li>Improved the usage-limit wait: the limit&#x27;s state and the countdown with the usage-credits option now show as one block under the prompt, and limit messages no longer repeat the countdown</li><li>Improved the &quot;No such tool available&quot; error for Claude in Chrome tools called without their prefix: it now names the tool to call</li><li>Improved Monitor event rows to show what each event printed instead of repeating the description, and stopped repeating an unchanged &quot;Waiting for N … to finish&quot; line after every event</li><li>Improved Workflow tool sandbox hardening for errors thrown by async script hooks</li><li>Improved startup time and memory use by building only the parts of the settings schema that your settings files actually use</li><li>Improved <code>/claude-api</code>: <code>hillclimb</code> no longer spends rounds on prompt rewordings too small for the eval to measure, and an extra page you ask for beside <code>report.html</code> is built as one local file that loads nothing from the network</li><li>Improved lists such as <code>/tasks</code>, <code>/copy</code> and <code>/hooks</code>: the details after each name now line up in one column when they fit, and otherwise sit at the right edge</li><li>Improved <code>claude plugin marketplace add</code> to say when it replaces a marketplace already added under the same name from a different source, and how to undo it</li><li>Improved auto-memory loading: invisible characters and tags that imitate Claude Code&#x27;s own markup are neutralized in <code>MEMORY.md</code> and recalled memory notes before they reach Claude</li><li>Improved <code>claude remote-control</code>: in a folder you haven&#x27;t trusted yet, it now asks for workspace trust on the terminal instead of exiting</li><li>Improved artifact pages: Claude writes its design plan into the page instead of the reply, and uses the name you already gave something as the page title</li><li>Improved the Artifact tool so that when Claude is given a claude.ai chat or project link, an artifact from a chat, or an artifact id on its own, it asks for the right link or the content instead of stopping</li><li>Improved &quot;Notify members now&quot; in admin settings: one press reaches every workspace your organization claimed in an Enterprise Grid, and more members in large workspaces</li><li>Improved the error shown when adding a channel manager fails because the channel&#x27;s Slack workspace can&#x27;t be confirmed as connected to your organization</li><li>Improved a channel&#x27;s access lists in admin settings to show the connectors, repositories and plugins an auto-join pattern attaches, and where each comes from</li><li>Improved adding repositories as a channel manager: when your GitHub sign-in can&#x27;t confirm you&#x27;re a repository admin, the page asks you to sign in with GitHub</li><li>Improved the <code>/mcp</code> tool list: it shows more tools at once, scrolls with the page keys and mouse, and marks tools your organization blocked with a warning icon</li><li>Improved MCP tool results: images returned by MCP tools are now also saved to a file, so Bash, Read and other tools can open them</li><li>Improved <code>/tasks</code>: rows show a status icon, the name and whole facts, the title and key hints stay on screen with many tasks, and the list gains paging keys, the mouse wheel and clicks</li><li>Improved lists in <code>/help</code>, <code>/hooks</code>, <code>/copy</code>, <code>/chrome</code>, <code>/memory</code>, <code>/ide</code>, <code>/release-notes</code>, <code>/rewind</code>, <code>/diff</code>, <code>/remote-env</code>, <code>/plugin</code> and other pickers with page keys, mouse wheel and clicks</li><li>Improved lists beside a search box, such as <code>/skills</code> and <code>/artifacts</code>, to draw their pointer dim while the search box has the keys, so only one pointer is highlighted</li><li>Improved the compaction spinner: its timer now starts when compaction begins and it counts the summary&#x27;s tokens as they stream, replacing the percentage bar</li><li>Improved the browser page shown after signing in to an MCP server: centered layout, dark mode, and new artwork</li><li>Improved the Skill tool&#x27;s reply when a skill belongs to a plugin that failed to load, so Claude tells you the plugin could not be loaded instead of calling the skill uninstalled</li><li>Improved <code>prompt-audit</code> on Claude Code configuration: stale paths, stale commands and contradicting instruction files now lead the report, and thinking keywords that Claude Code documents are kept</li><li>Improved recovery from an <code>installed_plugins.json</code> that cannot be read at all: its contents are kept in a file beside it before it is rebuilt, and <code>claude plugin list</code> names that file</li><li>Improved artifact database reads: an ordered query that returns a full page now says it is one page and how to read the rest</li><li>Improved first-reply latency: a pattern-compile step that ran at the end of a session&#x27;s first reply now runs while the reply streams in</li><li>Improved first-request latency by reusing the preconnected API connection</li><li>Improved startup: <code>claude -p</code> and Claude Code Remote no longer load the interactive UI, and the auto-mode classifier&#x27;s rules and the Artifact tool load on first use instead of at launch</li><li>Improved startup for claude.ai accounts whose Artifact tool features aren&#x27;t known yet, as on a first run: the prompt no longer waits up to 1.5 s to check them; the first message waits if needed</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Не показано змін: 126</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul lang="en"><li>We&#x27;ve launched <strong>Claude Sonnet 5.5</strong> (<code>claude-sonnet-5-5</code>). It&#x27;s available on the Claude API, <a href="https://platform.claude.com/docs/en/build-with-claude/claude-in-amazon-bedrock">Claude in Amazon Bedrock</a>, <a href="https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws">Claude Platform on AWS</a>, <a href="https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai">Claude on Google Cloud</a>, and <a href="https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry">Claude in Microsoft Foundry</a>. For its context window, output limits, and prices, see the <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Claude Sonnet 5.5 model page</a>.</li><li>Code written for Claude Sonnet 5 can break on Claude Sonnet 5.5 in five ways. To turn off up-front thinking, send <code>thinking: {&quot;type&quot;: &quot;between_tools&quot;}</code> instead of <code>&quot;disabled&quot;</code>, at <code>high</code> effort or below. Forced tool use (<code>tool_choice</code> types <code>any</code> and <code>tool</code>) returns a 400 error. Thinking blocks are tied to the model and the conversation.</li><li>Thinking blocks that Claude Sonnet 5.5 produces work only in the account that produced them, or in an account linked to it. When another account sends one of these blocks, the API drops the block before the model sees it, and the request succeeds. Blocks from earlier models aren&#x27;t affected. See <a href="https://platform.claude.com/docs/en/build-with-claude/preserved-thinking#account-bound-thinking">Preserved thinking</a>.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://support.claude.com/en/articles/12138966-release-notes">Claude Apps release notes</a></h3><ul lang="en"><li>Claude Sonnet 5.5 launch</li><li>We just launched Claude Sonnet 5.5, the second model in our Claude 5.5 family. Sonnet 5.5 is a faster, lower-cost complement to Claude Opus 5.5. For more information, see our blog post: Introducing Claude Sonnet 5.5.</li><li>Build plugins for Claude</li><li>You can now submit plugins to the Claude directory through a new developer portal, track them through review, and see usage analytics once they’re live. For more information, see our blog post: Build plugins for Claude.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://code.claude.com/docs/llms.txt">Claude Code docs — new pages</a></h3><ul lang="en"><li>Get started with the desktop app: Install the Claude desktop app, open the Code tab, and start your first Claude Code session on a project folder on your computer.</li><li>Publish and distribute a plugin: Publish a Claude Code plugin through your own marketplace or Anthropic&#x27;s directory, with a pre-release checklist and how users get updates.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-agent-sdk-python/releases.atom">Claude Agent SDK (Python) releases</a></h3><ul lang="en"><li>v0.2.160: <strong>Fixed follow-up turns failing after background subagents</strong>: When using <code>query()</code> with hooks, <code>can_use_tool</code>, or SDK MCP servers, stdin was closed too early if a subagent finished just before the turn&#x27;s result arrived. Follow-up turns would then fail with &quot;Stream closed&quot; and the model would report the tool as refused.</li></ul></div></section></main>
+<footer><p>Дата випуску: 2026-09-29. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>

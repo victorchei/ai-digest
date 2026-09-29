@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-09-29</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-09-29.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-09-29</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html" aria-current="page">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Anthropic випустила Claude Sonnet 5.5 зі змінами в API, що ламають зворотну сумісність, а GitHub Copilot додав її протягом доби. Робота над Claude Code зосередилася на експлуатації налаштувань агентів: масове перепідключення MCP, аудит промптів, написаних для старіших моделей, і окремий перемикач Ultracode. Agent SDK виправляють проблеми життєвого циклу навколо фонових subagents. Codex посилив MCP OAuth і поведінку пісочниці. Ollama додала нетекстові моделі прийняття рішень для класифікації та маршрутизації.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Sonnet 5.5 виходить із п&#x27;ятьма змінами в API, що ламають сумісність</a></h3><p>Sonnet 5.5 (<code>claude-sonnet-5-5</code>) доступна в Claude API, Bedrock, Google Cloud і Foundry, а також у GitHub Copilot. Код, написаний для Sonnet 5, може перестати працювати: змінилися правила для thinking, примусового використання інструментів, computer use та advisor.</p><p class="chips"><span class="chip chip-info">Вердикт: Спробувати</span> <span class="chip chip-neutral">Чи працює: Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 23</p></article><article class="card" aria-labelledby="card-1"><h3 id="card-1"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"><code>/doctor prompt-audit</code> виявляє застарілі патерни написання промптів</a></h3><p>Claude Code може перевіряти файли CLAUDE.md, skills, агентів і команди на патерни промптів, написані для старіших моделей, за допомогою <code>/doctor prompt-audit</code> або <code>/checkup prompt-audit</code>.</p><p class="chips"><span class="chip chip-info">Вердикт: Спробувати</span> <span class="chip chip-bad">Чи працює: Сире</span></p><p class="reliability">відкритих багів: 41 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 2</p></article><article class="card" aria-labelledby="card-2"><h3 id="card-2"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"><code>/mcp reconnect all</code> повторює підключення до кожного MCP server, що не підключився</a></h3><p>Нова команда в інтерактивному терміналі одним кроком повторює спробу підключення до кожного MCP server, який не зміг підключитися або потребує автентифікації.</p><p class="chips"><span class="chip chip-good">Вердикт: Впроваджувати</span> <span class="chip chip-neutral">Чи працює: Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 7</p></article><article class="card" aria-labelledby="card-3"><h3 id="card-3"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Ultracode стає окремим перемикачем у <code>/effort</code></a></h3><p>Ultracode більше не примусово встановлює xhigh effort. Це окремий перемикач у <code>/effort</code> (Tab або <code>/effort ultracode [on|off]</code>), який залишається ввімкненим на будь-якому рівні effort.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-warn">Чи працює: Працює із застереженнями</span></p><p class="reliability">відкритих багів: 5 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 6</p></article><article class="card" aria-labelledby="card-4"><h3 id="card-4"><a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.160">Agent SDK Python виправляє збої наступних ходів після фонових subagents</a></h3><p>Версія 0.2.160 тримає stdin відкритим, доки CLI не повідомить про простій, що усуває помилки «Stream closed» на наступних ходах при використанні hooks, <code>can_use_tool</code> або SDK MCP servers. До неї входить CLI 2.1.283.</p><p class="chips"><span class="chip chip-good">Вердикт: Впроваджувати</span> <span class="chip chip-neutral">Чи працює: Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 4</p></article><article class="card" aria-labelledby="card-5"><h3 id="card-5"><a href="https://github.com/ollama/ollama/releases/tag/v0.35.0">Ollama v0.35.0 додає моделі прийняття рішень, що повертають ймовірності</a></h3><p>Новий endpoint <code>/v1/systemone</code> обслуговує моделі прийняття рішень, як-от Nimble і Tev1. Вони повертають варіанти вибору, ймовірності та оцінки замість тексту — для тріажу, маршрутизації та класифікації.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-neutral">Чи працює: Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 0 · згадок в обговореннях: 3</p></article><article class="card" aria-labelledby="card-6"><h3 id="card-6"><a href="https://github.com/openai/codex/releases/tag/rust-v0.158.0">Codex 0.158.0 додає клієнтські секрети MCP OAuth і виправлення пісочниці</a></h3><p>Codex може підключатися до MCP servers, які потребують попередньо зареєстрованих клієнтських секретів OAuth, за допомогою <code>codex mcp add --oauth-client-secret</code>. Також додано копіювання при виділенні в TUI та виправлено проблеми пісочниці у Windows і Linux.</p><p class="chips"><span class="chip chip-warn">Вердикт: Стежити</span> <span class="chip chip-bad">Чи працює: Сире</span></p><p class="reliability">відкритих багів: 62 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 3</p></article></section></main>
+<footer><p>Дата випуску: 2026-09-29. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>
