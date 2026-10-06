@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-10-06</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-10-06.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-10-06</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html" aria-current="page">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Claude Code дедалі більше перетворюється на програмовану платформу: моди отримують багатші дані для hooks, API вибору та повноцінний запускач тестів, а hooks навчаються розрізняти subagents і основну сесію. Керування сесіями рухається в бік іменованих тривалих завдань із attach і logs. Конкуренти відкривають можливості рев&#x27;ю та агентів для скриптів: GitHub надає code review від Copilot через API. Локальні середовища на кшталт Ollama додають вузькі моделі ухвалення рішень і декларації можливостей. Cowork від Anthropic переносить виконання в хмару.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0">Моди отримали офлайн-запускач тестів: claude plugin test</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Документація Claude Code тепер описує <code>claude plugin test</code>: команда завантажує мод, запускає події через його hooks, підміняє виклики model і store та повідомляє про успіх або невдачу. Сесія, вхід в обліковий запис і мережа не потрібні.</p></dd><dt>Що змінилося з минулого випуску</dt><dd><p>Випуск 2026-10-02: Спробувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0. Тепер: Впроваджувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0.</p></dd><dt>Чому це важливо</dt><dd><p>Раніше моди перевіряли, завантажуючи їх у живій сесії. Тести, які запускають <code>tool.call</code> або <code>command.run</code> і перевіряють результат, виявляють регресії раніше, а ненульовий код виходу при невдачі добре підходить для CI.</p></dd><dt>Можливості</dt><dd><p>Навчайте написання модів за допомогою поетапних вправ, що виконуються офлайн. Передавайте клієнтам моди разом із набором тестів. Підміняйте <code>$.model.complete</code>, щоб детерміновано тестувати логіку обробки промптів без витрат токенів.</p></dd><dt>Як використати</dt><dd><p>Створіть файл із суфіксом <code>.test.ts</code> у каталозі plugin, імпортуйте <code>test</code> і <code>expect</code> з <code>claude-code/testing</code>, зареєструйте заглушки через <code>on(&#x27;tool.call&#x27;, ...)</code>, запускайте події викликом <code>$.tool.call(...)</code>, а потім виконайте <code>claude plugin test</code> у каталозі мода. У кожному файлі має бути щонайменше один <code>test()</code>.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 5</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Надійність невідома: функції лише 4 дні, відомих помилок немає. Проте це локальний безкоштовний інструмент розробки з низьким ризиком і зрозумілою документацією.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://code.claude.com/docs/en/plugins/mods/test.md">Test a mod · Claude Code docs — new pages</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-1"><h3 id="card-1">claude attach і claude logs приймають імена сесій</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Додано <code>claude attach &lt;name&gt;</code> і <code>claude logs &lt;name&gt;</code>, а замість повного id можна вказати частину імені сесії.</p></dd><dt>Чому це важливо</dt><dd><p>Щоб знову підключитися до фонової або тривалої сесії, більше не потрібно копіювати id. Імена легше запам&#x27;ятати та використовувати в скриптах.</p></dd><dt>Можливості</dt><dd><p>Запускайте регулярні або тривалі автоматизації під передбачуваними іменами та перевіряйте їх через <code>claude logs</code>. Використовуйте короткі імена, щоб студенти могли підключатися до однотипної демонстраційної сесії.</p></dd><dt>Як використати</dt><dd><p>Давайте сесіям послідовні імена, потім виконуйте <code>claude logs &lt;part-of-name&gt;</code>, щоб переглянути вивід, і <code>claude attach &lt;part-of-name&gt;</code>, щоб повернутися до сесії. Спершу перегляньте <code>claude --help</code>, щоб дізнатися про прапорці та про те, як обробляються неоднозначні часткові імена.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 13</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Функції один день, надійність невідома, відомих виправлень чи помилок немає. Це зручна можливість, яку безпечно протестувати.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-05</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-2"><h3 id="card-2">Ліміт WebSearch тепер поповнюється на 100 викликів за годину</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Інтерактивні сесії більше не зупиняються після 200 викликів WebSearch. Ліміт поповнюється зі швидкістю 100 викликів на годину, швидкість задає <code>CLAUDE_CODE_WEB_SEARCH_REFILLS_PER_HOUR</code>, а значення 0 вимикає поповнення.</p></dd><dt>Чому це важливо</dt><dd><p>Тривалі дослідницькі сесії більше не впираються в жорстку межу. Обмеження стає ліміTом швидкості, який відновлюється.</p></dd><dt>Можливості</dt><dd><p>Проводьте довші сесії дослідження або аудиту документації без перезапуску. Встановіть нижче значення, щоб обмежити використання в навчальному класі або спільному середовищі.</p></dd><dt>Як використати</dt><dd><p>Для значення за замовчуванням нічого робити не потрібно. Щоб змінити його, задайте <code>CLAUDE_CODE_WEB_SEARCH_REFILLS_PER_HOUR</code> в оточенні оболонки перед запуском <code>claude</code>. Значення 0 вимикає поповнення.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 14</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Функції один день, надійність невідома, але вона лише послаблює обмеження, а відкритих помилок немає.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-05</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-3"><h3 id="card-3">MCP servers тепер можуть запитувати додатковий OAuth scope під час виклику</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Claude Code показує запит на повторну автентифікацію, коли MCP server просить розширити OAuth scope під час виклику інструмента.</p></dd><dt>Чому це важливо</dt><dd><p>Сервери можуть починати з вузьких дозволів і запитувати більше лише тоді, коли цього потребує інструмент, замість того щоб одразу просити широкий доступ.</p></dd><dt>Можливості</dt><dd><p>Проєктуйте MCP servers за принципом найменших привілеїв і розширюйте доступ на вимогу. Навчайте проєктуванню scope на прикладі кроку лише для читання та кроку запису, що викликає запит на згоду.</p></dd><dt>Як використати</dt><dd><p>Якщо ви створюєте MCP server із захистом OAuth, повертайте відповідь про недостатній scope з інструмента, якому потрібно більше доступу, а потім перевірте, що з&#x27;являється запит. Перш ніж покладатися на це, звірте точний формат відповіді в документації MCP.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 6</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Функції чотири дні, надійність невідома, відкриті помилки не шукали, а джерело не розкриває подробиць серверного контракту.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-02</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-4"><h3 id="card-4">Code review від Copilot можна викликати через REST і GraphQL</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>GitHub дає змогу запитувати code review від Copilot через свої REST і GraphQL API та задавати рівень зусиль для кожного запиту. Balanced став рівнем за замовчуванням 28 вересня 2026 року.</p></dd><dt>Чому це важливо</dt><dd><p>Рев&#x27;ю можна запускати зі скриптів і внутрішніх інструментів, а не лише через інтерфейс pull request. Рівень зусиль для кожного запиту дає змогу обирати між глибиною та швидкістю.</p></dd><dt>Можливості</dt><dd><p>Автоматично запускайте рев&#x27;ю із завдання CI або з hook Claude Code після push. Порівнюйте рев&#x27;ю Copilot зі своїм subagent-рецензентом, щоб навчати практики рев&#x27;ю.</p></dd><dt>Як використати</dt><dd><p>Знайдіть в документації GitHub API кінцеву точку запиту рев&#x27;ю та параметр рівня зусиль. Щоб змінити значення за замовчуванням, відкрийте Copilot, потім Code review у налаштуваннях репозиторію, організації або особистих налаштуваннях і виберіть Lite. Вказані плани: Pro і вище.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 17</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Надійність невідома, відкриті помилки не шукали, а для роботи потрібен платний план Copilot, тому для безкоштовного використання це не підходить.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.blog/changelog/2026-10-02-copilot-code-review-api-support-and-new-default-effort-level">Copilot code review: API support and new default effort level · GitHub Changelog</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-5"><h3 id="card-5">Ollama 0.35.1 додає моделі ухвалення рішень Clef і декларації можливостей</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Ollama підтримує моделі ухвалення рішень Clef (27B) і Clef Flash (9B) через <code>/v1/systemone</code>, тепер із введенням зображень. Вебпошук дозволяє десять пошуків на відповідь, а Modelfiles приймають декларації <code>CAPABILITY</code>.</p></dd><dt>Що змінилося з минулого випуску</dt><dd><p>Випуск 2026-09-29: Стежити · Невідомо · відкритих багів: 0 · виправлень після релізу: 0. Тепер: Спробувати · Працює із застереженнями · відкритих багів: 1 · виправлень після релізу: 0.</p></dd><dt>Чому це важливо</dt><dd><p>Моделі ухвалення рішень відповідають оцінками на фіксовані запитання типу «так/ні», що краще підходить для маршрутизації та класифікації, ніж вільний чат. Декларації можливостей не дозволяють клієнтам пропонувати їх для чату.</p></dd><dt>Можливості</dt><dd><p>Використовуйте локальну модель оцінювання для сортування скриншотів або повідомлень в автоматизаціях без витрат на API. Ухвалюйте рішення hooks на основі локальної оцінки.</p></dd><dt>Як використати</dt><dd><p>Завантажте модель Clef і надішліть POST на <code>/v1/systemone</code> з <code>state</code>, необов&#x27;язковими <code>images</code> і <code>questions</code>, як у прикладі з релізу. Спершу перевірте вимоги до обладнання: модель 27B важка, тож спробуйте Clef Flash.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-warn">Працює із застереженнями</span></p><p class="reliability">відкритих багів: 1 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 1</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/ollama/ollama/issues/18756">Rocm GPU VRAM ignored when evicting models</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Позначка — із застереженнями, є одна відкрита помилка щодо витіснення VRAM у ROCm, яка важлива лише для користувачів GPU від AMD.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/ollama/ollama/releases/tag/v0.35.1">v0.35.1 · Ollama releases</a></li></ul></dd></dl></article></section><section aria-labelledby="lesson"><h2 id="lesson">Урок тижня</h2><h3>Тестування hooks без сесії: заглушки та згенеровані події</h3><p>Hook — це функція, що реагує на подію, тож її можна тестувати як будь-яку функцію: передати їй подію й перевірити результат. Набір для тестування модів робить це за вас. Ваш тест отримує <code>$</code>, який виконує роль Claude Code. Виклик <code>$.tool.call({ tool: &#x27;Bash&#x27;, command: &#x27;ls&#x27; })</code> запускає подію через hooks вашого мода й повертає те, що вони відповіли. Другий аргумент, <code>on</code>, реєструє заглушки, які відповідають там, де ваш мод зазвичай залежить від Claude Code, наприклад <code>tool.call</code>, <code>store.get</code> або <code>$.model.complete</code>. Нічого реального не виконується: ні інструмент, ні model, ні мережа. Це дає детерміновані тести для логіки, яку було незручно перевіряти вручну. Шаблон такий: підготувати, виконати, перевірити. Налаштуйте заглушки, запустіть одну чи кілька подій, потім перевірте повернений текст або стан. Перевіряйте одну поведінку в одному тесті й називайте тести реченнями. Оскільки <code>claude plugin test</code> завершується зі статусом 1 при невдачі, той самий набір можна запускати в CI. Прості допоміжні функції вашого мода можна імпортувати й тестувати модульно без набору. Поєднайте це з новим <code>agentId</code> у <code>tool.check</code>: напишіть один тест із подією основної сесії та один із подією subagent і перевірте, що політика відрізняється.</p><h4>Вправа на 15 хвилин</h4><p>Візьміть будь-який мод із hook-командою. Додайте <code>tests/x.test.ts</code>, імпортуйте <code>test</code> і <code>expect</code> з <code>claude-code/testing</code>, підмініть <code>tool.call</code> так, щоб він повертав <code>{ result: &#x27;ok&#x27; }</code>, викличте двічі <code>$.tool.call</code>, виконайте команду через <code>$.command.run</code> і перевірте <code>answer.text</code>. Запустіть <code>claude plugin test</code>, потім навмисно зламайте мод і переконайтеся, що статус виходу дорівнює 1.</p><ul class="sources"><li><a href="https://code.claude.com/docs/en/plugins/mods/test.md">Test a mod · Claude Code docs — new pages</a></li><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-05</a></li></ul></section><section aria-labelledby="brief"><h2 id="brief">Коротко</h2><ul class="brief"><li><a href="https://github.com/openai/codex/releases/tag/rust-v0.160.1">0.160.1 · OpenAI Codex CLI releases</a> — Codex 0.160.1 — патч, що зберігає SYSTEMROOT, TEMP і TMP під час запуску віддалених stdio MCP servers, що виправляє середовища виконавця Windows, коли хост працює на Unix.</li><li><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes · 2026-10-01</a> — API Models від Anthropic тепер повертає поле <code>line</code>, наприклад <code>opus</code> або <code>sonnet</code>, тож моделі можна групувати без розбору id.</li><li><a href="https://simonwillison.net/2026/Oct/5/felix-rieseberg/">Quoting Felix Rieseberg · Simon Willison — everything</a> — Anthropic повідомляє, що новий Cowork виконує інференс і віртуальну машину в хмарі з окремою пісочницею для кожної сесії, тож робота триває, коли ноутбук закрито, а керувати нею можна з телефонів.</li></ul></section><section aria-labelledby="all-changes"><h2 id="all-changes">Усі зміни</h2><div class="changelog-group"><h3 lang="en"><a href="https://code.claude.com/docs/llms.txt">Claude Code docs — new pages</a></h3><ul lang="en"><li>Claude Code in Slack: Delegate coding tasks from Slack. This earlier version answers channel mentions only from Pro and Max accounts in workspaces not connected to Claude Tag.</li><li>Set up Claude Code (local mode) for a HIPAA-ready organization: Prepare developers&#x27; computers to run Claude Code (local mode) under the HIPAA configuration. Covers versions, network access, managed settings, and local data.</li><li>French (221 pages): Documentation for French.</li><li>German (221 pages): Documentation for German.</li><li>Italian (221 pages): Documentation for Italian.</li><li>Japanese (221 pages): Documentation for Japanese.</li><li>Spanish (221 pages): Documentation for Spanish.</li><li>Korean (221 pages): Documentation for Korean.</li><li>Simplified Chinese (221 pages): Documentation for Simplified Chinese.</li><li>Traditional Chinese (221 pages): Documentation for Traditional Chinese.</li><li>Russian (221 pages): Documentation for Russian.</li><li>Indonesian (221 pages): Documentation for Indonesian.</li><li>Brazilian Portuguese (221 pages): Documentation for Brazilian Portuguese.</li><li>Japanese (220 pages): Documentation for Japanese.</li><li>Mods reference: Complete reference for Claude Code mods: hooks module layout, events, mods API methods, render sites, elements by surface, limits, and settings.</li><li>Test a mod: Write automated tests for a Claude Code mod that fire events, stub Claude Code&#x27;s answers, and press buttons, with no session, sign-in, or network.</li><li>French (220 pages): Documentation for French.</li><li>German (220 pages): Documentation for German.</li><li>Italian (220 pages): Documentation for Italian.</li><li>Japanese (219 pages): Documentation for Japanese.</li><li>Spanish (220 pages): Documentation for Spanish.</li><li>Korean (220 pages): Documentation for Korean.</li><li>Simplified Chinese (220 pages): Documentation for Simplified Chinese.</li><li>Traditional Chinese (220 pages): Documentation for Traditional Chinese.</li><li>Russian (220 pages): Documentation for Russian.</li><li>Indonesian (220 pages): Documentation for Indonesian.</li><li>Brazilian Portuguese (220 pages): Documentation for Brazilian Portuguese.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.288–2.1.290</a></h3><ul lang="en"><li>Added <code>serverToolUses</code> to the result of a mod&#x27;s <code>turn.step</code> hook: the tool calls the API ran itself (the advisor), each with its id, name, input, start and end</li><li>Added <code>agentId</code> to the <code>tool.check</code> event of plugin hooks, so a hook can tell a subagent&#x27;s permission check from the main session&#x27;s</li><li>Added <code>ceiling</code> to the question and verdict a mod&#x27;s <code>tool.check</code> hook reads, naming the approval an organization requires for a tool</li><li>Added <code>ThemeKey</code> and <code>Color</code> types to the plugin hooks typings, so an editor lists the theme colors a mod&#x27;s drawing can name</li><li>Added to <code>claude plugin validate</code>: each hook a mod registers at a gating site is listed with whether it has a <code>.catch</code> (<code>gatingHooks</code> under <code>--json</code>)</li><li>Added <code>claude attach &lt;name&gt;</code> and <code>claude logs &lt;name&gt;</code>: part of a session name works in place of the id</li><li>Added <code>/claude-api managed-agents-onboard &lt;url&gt;</code> to set up the Managed Agents pattern a page describes as <code>ant apply</code> files</li><li>Added <code>/claude-api managed-agents-onboard &lt;quickstart-name&gt;</code> to build a Console quickstart template, such as <code>deep-researcher</code>, with the <code>ant</code> CLI</li><li>Added a screen reader announcement, &quot;Message queued.&quot;, when you send a message while Claude is working</li><li>Added a way to review and run a plugin marketplace&#x27;s install or update command from the Manage plugins dialog</li><li>Added fast mode in Slack: mention Claude with <code>!fast</code> to switch a thread to fast mode, moving it to Opus if needed, and <code>!fast off</code> to switch back; replies show (fast) while it&#x27;s on</li><li>Added the optional Path prefixes field when creating a custom connection in an access bundle, so its allow rule can cover only those paths instead of the whole host</li><li>Added <code>agent.spawn</code> for teammates, one agent id across plugin hook events, and idle and waiting states in <code>$.agent.list()</code></li><li>Added <code>$.ui.selection()</code> for mods: returns the text you last selected in fullscreen mode and, when the selection lies within one transcript row, that row</li><li>Added a built-in <code>gh api</code> to cloud sessions whose image has no GitHub CLI, and fixed the built-in sending control characters from file names, jq filters or GitHub errors to the terminal</li><li>Added recovery for a prompt cleared with Ctrl+C: pressing Up on the empty prompt brings the draft back, including pasted text and images</li><li>Added a re-authenticate prompt when an MCP server asks for more OAuth scope during a tool call</li><li>Added <code>--max-findings &lt;n&gt;|all</code> to /code-review to report more or fewer findings than the usual limit; the choice is reused until you pass <code>--max-findings default</code></li><li>Added Ctrl+F to find a session by name and Alt+↑/↓ to jump between groups in the agents view; both, and rename, can be rebound in keybindings.json</li><li>Added a screen reader mode announcement of the new permission mode when you approve a plan, including with Shift+Tab</li><li>Changed <code>CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC</code> to also skip the startup connection warm-up</li><li>Changed Claude in Chrome so that a project&#x27;s settings files can no longer turn it on; use <code>--chrome</code>, <code>/chrome</code> or your user settings</li><li>Changed the Bash tool to ask for permission before running <code>pyright</code>, which is no longer treated as a read-only command</li><li>Changed what a mod&#x27;s <code>$.process.spawn</code> rejects with when another mod denies it after the child ran: it now says the call ran and a plugin withheld its result</li><li>Changed the background daemon&#x27;s log to write a multi-line message as one JSON-quoted line</li><li>Changed skills and custom commands to refuse a <code>!</code> shell command that contains raw control characters other than tab and newline, with a message that shows where they are</li><li>Changed <code>/artifacts</code>: opening an artifact in your browser now closes the list</li><li>Changed Bash permission checks so that more forms of the <code>ps</code> command ask for approval instead of running without asking</li><li>Changed plugin hooks so long text is clipped and logged instead of being refused or dropped silently</li><li>Changed background sessions whose scheduled task is gone: they now move to Completed about 20 seconds later and can be updated or shut down when idle</li><li>Changed the &quot;Press ← again&quot; confirm on a just-cleared prompt: a second ← no longer has to wait a second before it switches, and holding ← down now switches too</li><li>Changed the errors shown when the <code>/ultrareview</code> upload fails at a git step: they name the step and what to try, and no longer repeat git&#x27;s own error text</li><li>Changed <code>/code-review</code> at medium effort to also report cleanup and CLAUDE.md conventions findings on models without tuned review settings, including Opus 5.5 and Sonnet 5.5</li><li>Changed an in-process teammate&#x27;s <code>agent_id</code> in Agent results to its agent ID (its <code>name@team</code> address stays in <code>teammate_id</code>); TeammateIdle hooks no longer fire from its subagents or forks</li><li>Changed background sessions waiting on a scheduled wakeup (<code>/loop</code>): they are now left running through updates and low memory, where being restarted or shut down could silently lose the wakeup</li><li>Changed <code>/model</code>, <code>/effort</code> and <code>/rename</code> sent from <code>claude agents</code> to a busy background session to apply right away, without a confirmation, instead of when the turn ends</li><li>Changed the interactive session&#x27;s WebSearch budget to refill over time (100 calls/hour; <code>CLAUDE_CODE_WEB_SEARCH_REFILLS_PER_HOUR</code> sets the rate, 0 turns it off) instead of ending after 200 calls</li><li>Changed <code>claude plugin update</code> on a plugin loaded from a directory to print just its reason, without the &quot;Failed to update plugin&quot; prefix, as for built-in plugins</li><li>Changed the built-in <code>gh api</code> in cloud sessions: a host other than github.com set in <code>GH_HOST</code> or <code>GH_REPO</code> is now refused (use <code>--hostname</code> or a full URL), and stderr notes requests to other hosts</li><li>Changed the <code>claude-api</code> skill&#x27;s Managed Agents examples to turn off the web tools unless the agent needs them and to use the <code>auto</code> permission policy</li><li>Changed message timestamps to show by default (turn them off with the Claude Code: Show Message Timestamps setting)</li><li>Changed the channel instructions limit to 8,192 characters instead of bytes, so non-English text gets the same room, and added a character count beside Save on the Configure page</li><li>Changed the background command time limit to apply only in unattended sessions (<code>-p</code>, Agent SDK, CI, cloud); terminal, desktop app and VS Code sessions have no limit</li><li>Changed the client-side auto mode classifier to ignore an <code>ANTHROPIC_DEFAULT_SONNET_MODEL</code> pin that names Claude Sonnet 5.5 or Opus 5.5 and use Claude Sonnet 5 instead</li><li>Changed <code>claude project purge</code> to <code>claude purge</code>; the old name still works and prints a notice</li><li>Changed the agents view <code>n:</code> filter (and Ctrl+F search) so Enter opens the session whose name matches best instead of the top row</li><li>Changed <code>/autocompact</code> to save the auto-compact window per model, so each model keeps its own setting when you switch</li><li>Changed MCP URL prompts from servers that can&#x27;t report when you&#x27;re done to wait for &quot;I&#x27;m done, continue&quot; before the tool call continues, so you can finish in the browser first</li><li>Improved MCP startup behind a network proxy: a server the proxy blocks (HTTP 403) is no longer retried three times</li><li>Improved permission prompts from background agents to show the Ctrl+X Ctrl+K shortcut that stops all background agents</li><li>Improved the built-in <code>plugin-authoring</code> skill: Claude now gives the one command another person runs to install a mod you made, and writes it in a README&#x27;s install section</li><li>Improved the reply to <code>/plugin</code> in the desktop app&#x27;s Code tab: it now says where to install and manage plugins there</li><li>Improved the Bash changed-files view: when a chained command includes git merge, pull or checkout, it lists the files without full diffs</li><li>Improved the error shown when a cloud session is started without a claude.ai sign-in: it now names <code>claude auth login</code> and /login and no longer blames API-key authentication</li><li>Improved the Read tool&#x27;s message for binary files: it now points Claude to a skill or a shell command that can read the format</li><li>Improved the error shown when a git config file stops the <code>/ultrareview</code> upload: it is about half as long and says what kind of file is the problem</li><li>Improved the errors shown when the <code>/ultrareview</code> upload refuses a checkout: each known cause now has its own message, with a way to fix it</li><li>Improved Claude in Chrome: a <code>browser_batch</code> call now gets 90 seconds, up from 60, before it is reported as timed out</li><li>Improved responsiveness while resuming large sessions: timers, input and rendering keep running while the transcript loads</li><li>Improved the / and @ suggestion lists: the selected row now starts with a ❯ pointer, so you can see it without color</li><li>Improved Continue After Reload: tabs reopened after VS Code restarts its extensions now also finish a step the restart interrupted</li><li>Improved file pills in messages: hovering one now shows the file&#x27;s path from the project folder, so same-named files can be told apart</li><li>Improved Claude&#x27;s notice in your direct messages when your own Claude plan&#x27;s usage limit is reached: it shows within seconds and says when the limit resets</li><li>Improved the earlier Claude in Slack app&#x27;s reply when it can&#x27;t start a session: it now says what failed and who can fix it, in full only once per thread</li><li>Improved how quickly large files open in a plugin code pane by laying the highlighted view out once at its final width</li><li>Improved the line a mod&#x27;s author sees when its band or pane fails to draw: it names the mod and says nothing was drawn</li><li>Improved auto mode: when a conversation grows too long for the client-side safety classifier to review, it is now compacted instead of prompting for, or failing, every tool call</li><li>Improved screen reader mode: short announcements, such as a deleted word, now stay on screen until your next key press or until something above them on screen changes</li><li>Improved screen reader mode: answered questions in question dialogs now say &quot;answered&quot; beside their box</li><li>Improved cloud sessions: a new conversation&#x27;s first turn no longer waits for a stdio MCP server whose config sets <code>alwaysLoad: false</code></li><li>Improved &quot;You should know&quot; notes to say &quot;we&quot;, &quot;the main agent&quot; or &quot;you&quot; depending on who was responsible for a decision</li><li>Improved the error for an artifact database write refused at the database&#x27;s size limit: it now states the limit and what frees space</li><li>Improved Bash permission prompts to give a shorter reason when part of a command can&#x27;t be checked before it runs</li><li>Improved Remote Control&#x27;s recovery from an expired server credential: sessions stay connected during renewal and are kept if it gives up after a server outage</li><li>Improved Claude to also follow a related Slack thread in another channel that it only read, so updates there reach the conversation that depends on them</li><li>Improved save errors on a channel&#x27;s Configure page: too-long channel instructions now say to shorten them, and a save refused for lost access no longer says to try again</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Не показано змін: 232</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul lang="en"><li>We&#x27;ve added a <code>line</code> field to the <a href="https://platform.claude.com/docs/en/api/models/list">Models API</a>. <code>GET /v1/models</code> and <code>GET /v1/models/{model_id}</code> now return the model line each model belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report <code>opus</code>, for example. Use <code>line</code> to group models without parsing their IDs. <code>line</code> is <code>null</code> for a model that belongs to no line.</li></ul></div></section></main>
+<footer><p>Дата випуску: 2026-10-06. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>
