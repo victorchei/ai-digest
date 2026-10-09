@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-10-09</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-10-09.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-10-09</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html" aria-current="page">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Інструменти для агентів зміщують фокус із можливостей на контроль. Claude Code отримав hooks із блокуванням у разі збою (fail-closed), налаштування effort для кожного subagent і обмежені повторні спроби, а GitHub зробив локальну пісочницю загальнодоступною. Models і далі розділяються на рівні: Haiku 5.5 приносить контекст 1M на рівень для великих обсягів і низької затримки, з доплатою за понад 100k токенів. Віддалений нагляд за локальними агентами поширюється (iOS-застосунок Cursor), а типові налаштування протоколу під MCP servers змінюються, тож фіксуйте версії того, від чого залежите, і тестуйте їх.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0">Hooks тепер можуть блокувати дію у разі збою завдяки onFailure block</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Command і HTTP hooks приймають <code>onFailure: &quot;block&quot;</code>: якщо hook не вдається запустити, він перевищує час очікування або завершується з неочікуваним кодом, дія блокується. Окремо теги <code>&lt;system-reminder&gt;</code> у виводі hook тепер екрануються, перш ніж потрапити до Claude.</p></dd><dt>Чому це важливо</dt><dd><p>Досі зламаний захисний hook мовчки пропускав дію, тож надійність такого hook залежала лише від його скрипту. Режим fail-closed робить hooks справжнім механізмом примусового контролю. Екранування закриває шлях, яким вивід hook міг видавати себе за системні інструкції.</p></dd><dt>Можливості</dt><dd><p>Створюйте надійні запобіжники: блокуйте запис у захищені шляхи, вимагайте запуск тестів перед комітом, обмежуйте команди розгортання. Для навчання це наочний приклад різниці між проєктуванням fail-open і fail-closed. Заплановані запуски без нагляду отримують безпечнішу базу.</p></dd><dt>Як використати</dt><dd><p>Додайте <code>&quot;onFailure&quot;: &quot;block&quot;</code> до запису hook у налаштуваннях для hooks, що захищають щось ризиковане (секрети, руйнівні команди оболонки). Потім перевірте, навмисно зламавши скрипт, наприклад неправильним шляхом або таймаутом, і переконайтеся, що дію заблоковано. Не вмикайте це для hooks, які лише пишуть журнал або надсилають сповіщення. Якщо ваш hook додавав текст <code>&lt;system-reminder&gt;</code>, перевірте, як він тепер надходить.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 77</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Невелика, але очевидно корисна зміна; їй від 1 до 3 днів, підтверджень ще немає, тож спершу спробуйте на одному захисному hook.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-08</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-1"><h3 id="card-1">Claude Haiku 5.5: контекст 1M для великих обсягів роботи</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Claude Haiku 5.5 (<code>claude-haiku-5-5</code>) — це model, налаштована на роботу з великими обсягами та чутлива до затримок. Вона має вікно контексту 1M токенів, максимальний вивід 128k і адаптивне мислення з параметром effort. Доступна в Claude API та у великих хмарах.</p></dd><dt>Чому це важливо</dt><dd><p>Дешевий і швидкий рівень тепер отримує довгий контекст і адаптивне мислення, які раніше були лише у більших models. У документації зазначено, що промпти понад 100,000 токенів на Haiku 5.5 коштують дорожче, на відміну від інших models з 1M, і що вона за замовчуванням зберігає попередні блоки мислення в контексті.</p></dd><dt>Можливості</dt><dd><p>Дешеві subagents, масова класифікація, сортування журналів чи документів, навчальні боти, яким потрібні швидкі відповіді. Роботу з довгим контекстом можна запускати на нижчому рівні, якщо стежити за цінами понад 100k.</p></dd><dt>Як використати</dt><dd><p>Перемкніть скрипт для великих обсягів або subagent на <code>claude-haiku-5-5</code> і порівняйте якість та затримку з вашою поточною model. Налаштуйте мислення параметром effort. Скористайтеся API підрахунку токенів, щоб побачити, чи промпти перевищують 100k токенів, перш ніж на це зважуватися. Точні тарифи дивіться на сторінці цін.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 37</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Їй лише 2 дні, надійність невідома; надбавка понад 100k токенів означає, що вартість варто виміряти до перенесення навантажень.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes · 2026-10-07</a></li><li><a href="https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot">Claude Haiku 5.5 in GitHub Copilot · GitHub Changelog</a></li><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-07</a></li><li><a href="https://support.claude.com/en/articles/12138966-release-notes">Claude Apps release notes · 2026-10-07</a></li><li><a href="https://www.latent.space/p/ainews-claude-haiku-55-better-than">[AINews] Claude Haiku 5.5 — better than GPT-6 Luna at the same pricing · Latent Space</a></li><li><a href="https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/">Claude Haiku 5.5 · Simon Willison — everything</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-2"><h3 id="card-2">Subagents отримали налаштування effort і ліміт попереднього завантаження 32 skills</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Інструмент Agent має новий параметр <code>effort</code>, щоб Claude запускав subagent із вибраним рівнем зусиль. Subagents тепер попередньо завантажують щонайбільше 32 skills із поля <code>skills</code>, кожен по одному разу; через інструмент Skill вони все одно можуть викликати решту.</p></dd><dt>Чому це важливо</dt><dd><p>Зусилля на міркування можна витрачати там, де вони окупаються: низькі для пошуку й підсумовування, високі для рев&#x27;ю. Ліміт не дає великому списку skills заповнити контекст subagent на старті, а решта лишається доступною на вимогу.</p></dd><dt>Можливості</dt><dd><p>Оркестратори, що поєднують дешевих швидких виконавців з кількома глибокими рев&#x27;юерами. Бібліотеки skills можуть рости, не роздуваючи кожен subagent. Добрий матеріал для навчання проєктуванню агентів з урахуванням вартості.</p></dd><dt>Як використати</dt><dd><p>У робочих процесах із багатьма subagents попросіть Claude запускати дослідницькі subagents з низьким <code>effort</code>, а рев&#x27;ю-subagents — з високим. Якщо список <code>skills</code> у subagent перевищує 32, перенесіть найважливіші skills на початок і покладайтеся на інструмент Skill для решти. Допустимі значення effort дивіться в документації.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 24</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Обом змінам від 1 до 3 днів, виміряної історії роботи немає; їх можна без ризику спробувати на одному робочому процесі.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-06</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-3"><h3 id="card-3">Локальні MCP servers тепер за замовчуванням узгоджують протокол 2026-07-28</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Локальні stdio-з&#x27;єднання MCP за замовчуванням узгоджують версію протоколу 2026-07-28 в усіх інсталяціях, зокрема Bedrock, Vertex і Foundry. Налаштування <code>MCP_PROTOCOL_NEGOTIATION=legacy</code> вимикає це.</p></dd><dt>Чому це важливо</dt><dd><p>Тиха зміна значень за замовчуванням може зламати servers, які ви написали або від яких залежите. В одному відкритому баґу повідомляється, що відповідь із помилкою на запит server/discover не маршрутизується й обриває з&#x27;єднання, і саме це може спричинити server, який не обробляє такий запит.</p></dd><dt>Можливості</dt><dd><p>Якщо ви створюєте MCP servers, можете підтримати нову версію й тестувати в обох режимах. Для навчання це живий приклад версіювання протоколів і відкату до старої версії.</p></dd><dt>Як використати</dt><dd><p>Перезапустіть Claude Code і перевірте, що кожен локальний MCP server досі підключається. Якщо якийсь не підключається, задайте <code>MCP_PROTOCOL_NEGOTIATION=legacy</code> у його середовищі та повідомте мейнтейнера. Для власних servers переконайтеся, що на невідомі запити надходить коректна маршрутизована відповідь із помилкою.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-warn">Працює із застереженнями</span></p><p class="reliability">відкритих багів: 1 · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 17</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/anthropics/claude-code/issues/100504">MCP: error reply to server/discover probe is unroutable and kills the connection</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Позначка надійності — із застереженнями: 1 відкритий баґ про обрив з&#x27;єднань; протестуйте свої servers і скористайтеся вимкненням через legacy, якщо щось зламається.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-06</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-4"><h3 id="card-4">Обмежте, як довго режим повторних спроб без нагляду чекає на 429 і 529</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p><code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS</code> обмежує, як довго режим повторних спроб без нагляду (<code>CLAUDE_CODE_RETRY_WATCHDOG</code>) вичікує помилки 429 і 529.</p></dd><dt>Чому це важливо</dt><dd><p>Запуски без нагляду, які натрапляли на ліміти запитів або перевантаження, раніше могли чекати без визначеної межі. Обмеження робить заплановані завдання передбачуваними й дозволяє їм завершитися помилкою та повідомити про неї, а не зависати.</p></dd><dt>Можливості</dt><dd><p>Заплановані автоматизації з відомим бюджетом часу та скрипти-обгортки, які надсилають сповіщення або переходять до іншого завдання, коли обмеження досягнуто.</p></dd><dt>Як використати</dt><dd><p>У запланованих або headless-запусках, де задано <code>CLAUDE_CODE_RETRY_WATCHDOG</code>, додайте <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS</code> зі значенням у мілісекундах, що вкладається у вікно вашого завдання, наприклад частина інтервалу cron. Подбайте, щоб ваша обгортка обробляла завершення з помилкою.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 38</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Одна змінна середовища, 0 відкритих баґів, і вона лише обмежує очікування; ризик для запланованих завдань низький.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-08</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-5"><h3 id="card-5">Локальна пісочниця Copilot загальнодоступна</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Локальна пісочниця для Copilot загальнодоступна (GA) у Copilot CLI, застосунку Copilot і сесіях VS Code з Agent Host. Вона обмежує доступ до файлової системи, мережі та облікових даних для команд, які запускає агент, через Microsoft eXecution Container у Windows, macOS і Linux. Додаткових витрат немає.</p></dd><dt>Що змінилося з минулого випуску</dt><dd><p>Без змін від випуску 2026-09-25-od-3: Стежити · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0.</p></dd><dt>Чому це важливо</dt><dd><p>Межі на основі політик, зокрема для локальних MCP і мовних servers, показують напрям автономного запуску агентів: обмежувати, до чого вони мають доступ, замість схвалення кожного кроку. Політики пісочниці діють незалежно від model.</p></dd><dt>Можливості</dt><dd><p>Еталонний дизайн для ваших власних налаштувань агентів: типово забороняти доступ до мережі та облікових даних, а потім дозволяти конкретні шляхи. Корисно під час демонстрації агентів студентам на спільній машині.</p></dd><dt>Як використати</dt><dd><p>Якщо ви користуєтеся Copilot CLI або сесіями Agent Host, прочитайте сторінку &#x27;About cloud and local sandboxes for GitHub Copilot&#x27; і ввімкніть пісочницю для тестового репозиторію. Порівняйте її обмеження для файлової системи та облікових даних із правилами дозволів і hooks у Claude Code.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 26</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Здебільшого актуально, якщо ви користуєтеся Copilot; їй 2 дні, надійність невідома. Варто вивчити як зразок для захисних механізмів Claude Code.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available">Local sandboxing for GitHub Copilot now generally available · GitHub Changelog</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-6"><h3 id="card-6">Cursor дозволяє наглядати за локальними агентами з iOS</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>iOS-застосунок Cursor тепер може бачити локальних агентів, що працюють на вашому комп&#x27;ютері, і відповідати їм. Це ввімкнено за замовчуванням, окрім організацій Enterprise. Агенти й далі працюють на комп&#x27;ютері, який має лишатися ввімкненим і онлайн.</p></dd><dt>Чому це важливо</dt><dd><p>Агенти часто зупиняються в очікуванні вводу, поки вас немає. Канал з телефона до тієї самої локальної сесії дає змогу не переносити роботу в хмару, але машина має не переходити в сплячий режим.</p></dd><dt>Можливості</dt><dd><p>Порівняйте з власним підходом до довгих запусків Claude Code: hook сповіщення плюс канал для відповіді. Це продуктовий патерн, який варто запозичити в невеликих автоматизаціях.</p></dd><dt>Як використати</dt><dd><p>Лише якщо ви користуєтеся Cursor: встановіть iOS-застосунок, увійдіть, підтвердьте сполучення в десктопному застосунку та ввімкніть &#x27;Keep this computer awake&#x27; у налаштуваннях Remote Control. Для Claude Code нічого не змінюється; сприймайте це як функцію для порівняння.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 15</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-neutral">Пропустити</span></p><p>Лише для Cursor і лише для iOS, їй 3 дні, надійність невідома; на робочий процес із Claude Code вона прямо не впливає.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://cursor.com/changelog/remote-control-local-agents">Remote control for local agents · Cursor changelog</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-7"><h3 id="card-7">Встановлення plugin одним кроком через --marketplace</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p><code>claude plugin install</code> тепер приймає <code>--marketplace &lt;source&gt;</code>: за потреби додає marketplace з тими самими перевірками політик, що й <code>claude plugin marketplace add</code>, а потім встановлює з нього plugin.</p></dd><dt>Чому це важливо</dt><dd><p>Раніше для цього потрібні були дві команди. Один крок спрощує автоматизацію налаштування plugins і їхнє документування, а перевірки політик усе одно застосовуються.</p></dd><dt>Можливості</dt><dd><p>Початкові скрипти для навчального класу чи нової машини, що встановлюють ваші skills, hooks і MCP plugins одним рядком.</p></dd><dt>Як використати</dt><dd><p>Запустіть <code>claude plugin install &lt;plugin&gt; --marketplace &lt;source&gt;</code> у скрипті налаштування, замінивши заповнювачі на ваш plugin і джерело marketplace. Після цього переконайтеся, що plugin з&#x27;явився у списку ваших plugins.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 3 · згадок в обговореннях: 8</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Проста зручність з тими самими перевірками політик, що й раніше; їй 3 дні, тож просто один раз перевірте в скрипті налаштування.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-06</a></li></ul></dd></dl></article></section><section aria-labelledby="lesson"><h2 id="lesson">Урок тижня</h2><h3>Робіть автоматизації такими, що блокують дію при збої та мають межі</h3><p>Агенти без нагляду підводять двома способами: пропускають щось, коли ламається перевірка безпеки, або зависають в очікуванні. Зміни цього тижня дають по засобу контролю для кожного випадку. З <code>onFailure: &quot;block&quot;</code> на command або HTTP hook, якщо hook не вдається запустити, він перевищує час очікування або завершується з неочікуваним кодом, дію блокується. Без цього одруківка у вашому захисному скрипті може обернути його на відсутність захисту взагалі. З <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS</code> режим повторних спроб без нагляду перестає вичікувати помилки 429 і 529 після обраного вами ліміту. Застосуйте правило: для кожного hook вирішіть, чи він щось захищає (fail closed), чи лише спостерігає (fail open). Для кожного запланованого завдання визначте найдовший допустимий час роботи й зробіть обмеження очікування меншим за нього. Пам&#x27;ятайте також, що вивід hook — це текст, який читає Claude: теги <code>&lt;system-reminder&gt;</code> у ньому тепер екрануються, тому не покладайтеся на hooks як на спосіб видавати себе за системні повідомлення. Перевіряйте збої навмисно, бо захист, який ви ніколи не бачили в разі збою, — це припущення.</p><h4>Вправа на 15 хвилин</h4><p>Виберіть один hook, що щось захищає, наприклад блокує редагування захищеного шляху. Додайте <code>onFailure: &quot;block&quot;</code>. Зламайте скрипт, указавши неіснуючий файл, і переконайтеся, що дію заблоковано. Потім виправте. Для одного запланованого завдання задайте <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS</code> зі значенням менше за ваше вікно запуску.</p><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-08</a></li></ul></section><section aria-labelledby="brief"><h2 id="brief">Коротко</h2><ul class="brief"><li><a href="https://github.blog/changelog/2026-10-06-stacked-pull-requests-generally-available">Stacked pull requests generally available · GitHub Changelog</a> — Stacked pull requests на GitHub стали GA: стеки перебазуються зі збереженням схвалень, зливаються як одна група черги, а <code>gh stack</code> підтримує worktrees. Корисно для розбиття великих змін, написаних агентом, на частини, придатні для рев&#x27;ю.</li><li><a href="https://github.com/ollama/ollama/releases/tag/v0.40.2">v0.40.2 · Ollama releases</a> — Ollama 0.40.2 оновлює старіші models у фоновому режимі та зберігає резервні копії, використовуючи додатковий диск; <code>ollama launch claude</code> тепер використовує повну довжину контексту model.</li></ul></section><section aria-labelledby="all-changes"><h2 id="all-changes">Усі зміни</h2><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.292–2.1.295</a></h3><ul lang="en"><li>Added <code>onFailure: &quot;block&quot;</code> for command and HTTP hooks: a hook that can&#x27;t start, times out, or exits with an unexpected code blocks the action instead of letting it through</li><li>Added Program Status Protocol (OSC 7501) support: terminals that implement it can show whether Claude Code is working, waiting on you, or done</li><li>Added quoted text to the <code>/copy</code> picker, so a drafted message copies without its <code>&gt;</code> markers</li><li>Added a warning to <code>claude plugin install</code>, <code>enable</code>, <code>disable</code> and <code>marketplace add</code> when the settings file they write to does not load</li><li>Added a line on stderr, when it is a terminal, that says what a <code>claude -p</code> run is waiting for when it stays open after its last turn</li><li>Added a &quot;Backgrounding cancelled&quot; message when you stop the turn while <code>←</code> is waiting for the current tool to finish</li><li>Added advice to <code>claude plugin validate</code> when a plugin&#x27;s README has no install line: it prints the line to paste and never changes the exit code, even with <code>--strict</code></li><li>Added <code>$.ui.notify</code> for mods: raises a native notification through your own notification setting and says which channel sent it</li><li>Added children to a mod&#x27;s <code>Button</code>: strings and <code>Text</code>, so a row of a list is one pressable with a chip or a dim detail inside</li><li>Added <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS</code> to limit how long unattended retry mode (<code>CLAUDE_CODE_RETRY_WATCHDOG</code>) waits out 429 and 529 errors</li><li>Added a chat row for files Claude sends you: click a file&#x27;s name to open it in the editor; Claude&#x27;s caption shows underneath, and the row stays visible in Focus view</li><li>Added a confirmation in Claude Tag admin settings before adding a channel manager moves that member to Custom roles, which can remove their other access</li><li>Added Claude Haiku 5.5 (<code>claude-haiku-5-5</code>), now the default Haiku model on the Anthropic API — 1M context, $0.10/$0.50 per Mtok ($0.50/$2.50 for prompts over 100K)</li><li>Added <code>agentType</code> to the <code>subagentStatusLine</code> payload, so scripts can tell custom subagent types apart</li><li>Added <code>isDeferred</code> to <code>$.tool.register</code> for mods: <code>false</code> lists the tool&#x27;s schema in the prompt from the start instead of behind tool search</li><li>Added <code>--marketplace &lt;source&gt;</code> to <code>claude plugin install</code>: adds the marketplace if needed, under the same policy checks as <code>claude plugin marketplace add</code>, then installs the plugin from it</li><li>Added an <code>effort</code> parameter to the Agent tool, so Claude runs a sub-agent at the effort level you ask for</li><li>Added <code>CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS</code> environment variable to set a longer base delay for the backoff when retrying an overloaded (529) request</li><li>Added <code>prompt.autocomplete</code>, an event a mod hooks to add its own rows to the prompt box&#x27;s autocomplete list</li><li>Added prompt caching to <code>$.model.complete</code> for mods: <code>prompt</code> and <code>system</code> take blocks of text, and <code>cache: true</code> on a block caches the request up to it</li><li>Added workflow agents to the <code>agent.spawn</code> mod hook, with their run and index, so a mod can refuse them</li><li>Added an Edit button to the Allowed domains card on a channel&#x27;s Configure page, so Enterprise admins can open the access bundle that sets the channel&#x27;s domains</li><li>Added the period&#x27;s total with its change from the previous period, and a breakdown by repository, to the PRs reviewed chart in Code Review analytics</li><li>Changed MCP tool descriptions the model loads through tool search to be cut at 16,384 characters instead of 2,048</li><li>Changed subagents to preload at most 32 skills from the <code>skills</code> field, each once; a subagent with the Skill tool can still invoke the rest</li><li>Changed Ctrl+C at the idle prompt of an attached background session to leave a pending <code>/loop</code> wakeup alone, so pressing it twice detaches and the loop keeps running; press Esc to stop it</li><li>Changed <code>claude agents</code> stopped with its background service (macOS, or Linux without the service installed): running sessions now stop in about a minute unless it is run again, and a notice says so</li><li>Changed claude.ai connectors to negotiate MCP protocol version 2026-07-28 by default on installs that fetch no flags; <code>MCP_PROTOCOL_NEGOTIATION=legacy</code> opts out</li><li>Changed Artifact pages with no background of their own to show on white instead of off-white</li><li>Changed what Claude and you read when a mod denies a tool call after the tool ran: it now says the tool ran and a plugin withheld its result</li><li>Changed tab stops to count from where a text starts instead of from the screen&#x27;s left edge: an answer indented by 2 has its first stop 8 cells in, where it was 6</li><li>Changed the Artifact tool&#x27;s permission prompts with telemetry disabled to the same five questions other installs get, instead of asking before each read of someone else&#x27;s artifact and each data edit</li><li>Changed scheduled and Run now routine runs in installs with telemetry disabled to publish new private artifacts, and update your own, without asking, as in other installs</li><li>Changed toasts from your organization&#x27;s mods to show ahead of other mods&#x27; toasts instead of waiting behind them</li><li>Changed WebSocket (<code>ws</code>) MCP servers: a message over 16 MiB is no longer parsed and closes the connection, the limit the other transports already have</li><li>Changed the settings confirmation cards Claude posts in a Slack channel to stay open for 30 minutes instead of 10</li><li>Changed Claude&#x27;s notice that a channel shared across Enterprise Grid workspaces uses organization defaults to post only when someone mentions Claude, at most once a month</li><li>Changed claude.ai skill syncing to check for changes about every 40 minutes, instead of every 10, while no session is in use</li><li>Changed the order of agent lists and of MCP servers announced to the model: names with non-ASCII characters now sort after ASCII names</li><li>Changed OpenTelemetry <code>claude_code.at_mention</code> logging to emit at most 100 agent and 100 MCP-resource events each time a prompt is read</li><li>Changed Claude in Slack to join announcement channels, where only admins can post, without posting its intro</li><li>Changed the limit on channel rules in Claude Tag admin settings from 20 to 50 for each workspace and for the organization-wide Slack page</li><li>Changed local (stdio) MCP server connections to negotiate protocol version 2026-07-28 by default on every install, including Bedrock, Vertex and Foundry; <code>MCP_PROTOCOL_NEGOTIATION=legacy</code> opts out</li><li>Changed <code>claude plugin test</code>: a failed <code>expect</code> inside a hook the test registered, or a stub answer the engine refuses, now fails the test instead of passing silently</li><li>Changed usage limit messages to write claude.ai settings links with https:// so terminals and apps can make them clickable</li><li>Changed scheduled and Run now routine runs to publish a new artifact only you can see without asking for approval; artifacts that request connectors or other access still ask</li><li>Changed agent names to allow at most 256 characters: a longer one is rejected, and a skill&#x27;s or a plugin file&#x27;s <code>name</code> longer than that is ignored</li><li>Changed the first message of a Slack thread continued with <code>!fork</code> to a card showing where it came from, the request, and who asked, with a link to the original thread</li><li>Changed the organization-wide and default spend limit boxes on Claude Tag&#x27;s spend limits page in admin settings to save only when you press Save or Enter, not when you click away</li><li>Improved the status shown in Remote Control, claude.ai and the desktop app for a session waiting on a permission prompt to name an MCP tool by its server and readable name instead of its <code>mcp__server__tool</code> identifier</li><li>Improved headless <code>rate_limit_event</code> usage-limit warnings to say whether the account has extra usage turned on</li><li>Improved the built-in <code>plugin-authoring</code> skill: it no longer tells a session with no terminal to run terminal commands, and explains sharing a mod only when asked</li><li>Improved Grep input handling: a search sent with grep&#x27;s <code>-l</code>, <code>-c</code> or <code>-r</code> flag now runs instead of failing the call</li><li>Improved <code>claude plugin validate</code> and plugin loading: when a hooks module is refused over a rebound top-level <code>var</code>, the error now names the line that rebinds it, the cause, and a fix</li><li>Improved the Workflow tool&#x27;s <code>scriptPath</code> refusal: it now says to pass the script inline via <code>script</code>, the route that works in sessions without a Read tool</li><li>Improved what Claude is told when a large file it sends fails to upload with no reason given, so it reports the failure instead of shrinking the file</li><li>Improved how <code>prompt</code> hooks on Stop and SubagentStop written as instructions (such as &quot;Carry on if the build is broken&quot;) are judged, so Claude is less likely to stop early</li><li>Improved Claude in Chrome: fewer page actions are refused when the browser is slow to report its tabs</li><li>Improved the Claude in Chrome message in cloud sessions when the browser can&#x27;t be reached: if you belong to more than one organization, it now says the extension must be signed in to the same one, and how to change that</li><li>Improved the Bash edit diff note to say the listed files changed while the command ran, which can include writes by other processes</li><li>Improved artifacts: Claude pins libraries to exact versions two weeks old or older</li><li>Improved Claude Tag admin settings to list an Enterprise Grid that isn&#x27;t connected yet, with a Connect button</li><li>Improved Code Review&#x27;s Add a repository dialog to list each repository that couldn&#x27;t be added and why, such as missing GitHub write access</li><li>Improved startup of <code>claude -p</code> and SDK sessions: the first turn no longer waits for HTTP and SSE MCP servers to answer <code>resources/list</code></li><li>Improved rendering speed of long bulleted or numbered replies: they stream, resize and re-open in the transcript (ctrl+o) much faster</li><li>Improved Ctrl+C draft recovery: a cleared prompt now stays reachable with Up after a slash command or a sent message</li><li>Improved hook output handling: <code>&lt;system-reminder&gt;</code> tags written in a hook&#x27;s output are escaped before they reach Claude</li><li>Improved tool input handling: Grep accepts <code>file_path</code> for <code>path</code>, and Write, WebFetch and Read ignore a few stray parameters instead of failing the call</li><li>Improved the steps shown when a marketplace declared in a settings file has a name that looks like an official Anthropic marketplace</li><li>Improved sandbox auto-allow: with strict sandbox mode set in user, managed or --settings settings, an interpreter command with an env var prefix like <code>FOO=bar python3 app.py</code> runs unprompted</li><li>Improved the Artifact tool&#x27;s listing: Claude now sees how many published artifacts you have and can list up to 200 at once instead of 50</li><li>Improved cloud sessions after a restart: Claude is now told which stopped background agents it can resume by id</li><li>Improved the Claude in Chrome message in claude.ai cloud sessions when the browser can&#x27;t be reached: Claude is now told it may continue with alternatives if the user prefers</li><li>Improved the /focus tip: it now invites you to try focus view mid-turn and shows how to switch back</li><li>Improved startup with local (stdio) MCP servers that ignore the newer protocol check: after one slow connect they are remembered for 7 days and connected the older way without the wait</li><li>Improved <code>@Claude !status</code> in a channel to say when Claude has stopped reading its untagged messages, why, and that an @-mention starts it reading again</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Не показано змін: 217</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://code.claude.com/docs/llms.txt">Claude Code docs — new pages</a></h3><ul lang="en"><li>Quickstart: Install Claude Code in your terminal, sign in, and use the CLI to explore your codebase and make your first code change.</li><li>Plugin commands reference: Reference for the claude plugin shell commands, /plugin and /reload-plugins in a session, and the flags that load a plugin for one session.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul lang="en"><li>We&#x27;ve lowered the price of prompt cache reads on Claude Sonnet 5.5 from $0.20 USD to $0.10 USD per million tokens: 0.05x the base input price instead of 0.1x. Cache writes and all other prices are unchanged. See <a href="https://platform.claude.com/docs/en/about-claude/pricing#prompt-caching">Prompt caching pricing</a>.</li><li>We&#x27;ve launched <strong>Claude Haiku 5.5</strong> (<code>claude-haiku-5-5</code>), our most capable model tuned for high-volume and latency-sensitive work. It has a <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">1M token context window</a>, 128k max output tokens, and <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">adaptive thinking</a> with the <a href="https://platform.claude.com/docs/en/build-with-claude/effort">effort parameter</a>.</li><li>Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (<code>budget_tokens</code>) returns a 400 error, and adaptive thinking is on by default, so a response can begin with <code>thinking</code> blocks. The same text also counts as more tokens. See the <a href="https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide">migration guide</a>. For model-specific prompting patterns, see <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5">Prompting Claude Haiku 5.5</a>.</li><li>The Python and TypeScript SDKs now include classes, in beta, for the <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool">browser use tool</a> and the <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">computer use tool</a>. You subclass one and write one method per tool against your own browser or desktop automation. The SDK runs the tool loop, the URL and file policies you set for the browser, and your approval callback.</li><li>Claude Max and Team plans now include monthly API credits. To learn how to claim them, see <a href="https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers">API credits for Max and Team plans</a>.</li><li>In Claude Managed Agents, a cloud environment with <code>limited</code> networking now also applies its <code>allowed_hosts</code> to the <code>web_search</code> and <code>web_fetch</code> tools. A <code>web_fetch</code> call for a URL on a host that <code>allowed_hosts</code> does not match returns a <code>url_not_allowed</code> error result to the agent. <code>web_search</code> omits results from such hosts.</li><li>With <code>limited</code> networking, creating a session fails with a 400 error when an enabled web tool&#x27;s <code>allowed_domains</code> has an entry not within <code>allowed_hosts</code>. So does a session update that adds such an entry. An <code>allowed_hosts</code> entry matches one exact host unless it starts with <code>*.</code>, so <code>docs.example.com</code> is not within <code>[&quot;example.com&quot;]</code>.</li><li>In Claude Managed Agents, the <a href="https://platform.claude.com/docs/en/managed-agents/tools#available-tools"><code>web_fetch</code> tool</a> now fetches only URLs that have already appeared in the session, for example in the text of a user message, in a <code>web_search</code> result, or in a page that <code>web_fetch</code> returned earlier. This reduces the risk of data exfiltration.</li><li>We&#x27;ve added <code>capabilities.server_tools</code> to the <a href="https://platform.claude.com/docs/en/api/models/list">Models API</a>. <code>GET /v1/models</code> and <code>GET /v1/models/{model_id}</code> now report whether each model accepts the web search and code execution tools. To check whether a model accepts the code execution tool, read <code>capabilities.server_tools.code_execution</code>. The top-level <code>capabilities.code_execution</code> reports whether code can call your request&#x27;s other tools. See <a href="https://platform.claude.com/docs/en/models/overview#using-the-models-api">Using the Models API</a>.</li><li>We&#x27;ve added <code>capabilities.thinking.types.disabled</code> to the <a href="https://platform.claude.com/docs/en/api/models/list">Models API</a>. <code>GET /v1/models</code> and <code>GET /v1/models/{model_id}</code> now report whether each model accepts <code>thinking: {type: &quot;disabled&quot;}</code>, which turns thinking off. See <a href="https://platform.claude.com/docs/en/models/overview#using-the-models-api">Using the Models API</a>.</li></ul><p class="omitted"><a href="https://platform.claude.com/docs/en/release-notes/overview">Не показано змін: 1</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://support.claude.com/en/articles/12138966-release-notes">Claude Apps release notes</a></h3><ul lang="en"><li>Claude Haiku 5.5 launch</li><li>We just launched Claude Haiku 5.5, the cheapest, fastest, and most capable small model we’ve released, designed for high-volume, cost-sensitive tasks. For more information, see our blog post: Claude Haiku 5.5.</li><li>Monthly API credits for Max and Team plans</li><li>Max and Team plans now include monthly API credits for running your own apps and agents on the Claude Platform. They roll out over a few days. Claim them by linking a Claude Console organization in Settings &gt; Billing (Max) or Organization settings &gt; Billing (Team). Learn more about monthly API credits for Max and Team plans.</li></ul></div></section></main>
+<footer><p>Дата випуску: 2026-10-09. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>
