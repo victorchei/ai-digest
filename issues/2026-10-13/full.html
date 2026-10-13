@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-10-13</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-10-13.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-10-13</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html" aria-current="page">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Оркестрація перейшла від одного агента в терміналі до багатьох агентів, якими керують програми. Dynamic workflows з&#x27;явилися в Managed Agents API у бета-версії, а Claude Code отримав compaction для кожного subagent і єдине перевизначення model для агентів workflow. Інструменти спостережуваності покращилися: час виконання hooks і підказки про помилки в frontmatter полегшують налагодження власних конфігурацій. Еталонні MCP servers досягли версії 1.0 з великою кількістю виправлень надійності. Типові налаштування дозволів і лімітів контексту продовжують змінюватися, тому перевіряйте їх після кожного оновлення.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0">Managed Agents тепер можуть писати й запускати dynamic workflows (бета)</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Агент Managed Agents може написати workflow — програму, яка поетапно запускає багатьох агентів і об&#x27;єднує результати. Вона виконується на сервері як workflow run. Вмикається через поле <code>multiagent</code> із бета-заголовком <code>managed-agents-2026-04-01</code>.</p></dd><dt>Чому це важливо</dt><dd><p>Для subagents головний агент має прочитати кожен звіт і вирішити, що робити далі. Workflow передає контекст програмно, тож основний потік залишається вільним для розмови з користувачем і звітування про прогрес. Підходить для аудитів, міграцій і глибоких досліджень.</p></dd><dt>Можливості</dt><dd><p>Масовий перегляд документів, міграції в межах усієї кодової бази, перехресна перевірка досліджень і навчальні демонстрації патернів fan-out та fan-in. Клієнтські завдання, як-от аудит сотень договорів чи сторінок, стають одним тривалим завданням, за яким можна стежити, замість ручного циклу.</p></dd><dt>Як використати</dt><dd><p>Установіть для поля <code>multiagent</code> агента значення <code>{&quot;type&quot;: &quot;multiagent_20261001&quot;, &quot;workflows&quot;: {&quot;type&quot;: &quot;enabled&quot;}}</code> і надсилайте бета-заголовок <code>managed-agents-2026-04-01</code>. У системному промпті агента вкажіть, коли починати запуск. Стежте за подіями <code>workflow_run.*</code> у потоці сесії. Спершу задайте бюджет сесії, адже кожен агент у запуску витрачає токени.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-warn">Працює із застереженнями</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · beta · днів від релізу: 4 · згадок в обговореннях: 77</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Бета-версія з позначеними застереженнями; витрати токенів зростають разом із кількістю агентів у запуску, тож почніть із бюджету сесії та невеликого завдання.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes · 2026-10-09</a></li><li><a href="https://www.latent.space/p/claude-dynamic-workflows">How Anthropic’s Dynamic Workflows Coordinate Claude Agents · Latent Space</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-1"><h3 id="card-1">Одна змінна середовища закріплює model для всіх агентів workflow</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p><code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> запускає всіх агентів workflow на одній model, тоді як інші subagents зберігають власні model.</p></dd><dt>Чому це важливо</dt><dd><p>Workflow може розгалужуватися на багатьох агентів, тож вартість залежить від використаної model. Один перемикач дає змогу віддати масову роботу дешевшій model без редагування кожного визначення subagent.</p></dd><dt>Можливості</dt><dd><p>Запускайте широкі аудити чи пакетні перегляди на меншій model, а основну сесію залишайте на потужнішій. Корисно під час навчання, коли для демонстрації в класі потрібна передбачувана вартість.</p></dd><dt>Як використати</dt><dd><p>Перед запуском workflow задайте для <code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> назву model у профілі оболонки або в env налаштувань. Джерело не вказує допустимого формату значення, тож перегляньте документацію, як називати model, а потім порівняйте вартість і якість на невеликому запуску.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 23</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Надійність невідома, відкритих багів не знайдено; налаштування з низьким ризиком, яке варто перевірити на невеликому workflow.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-2"><h3 id="card-2">Subagents можуть стискати контекст раніше завдяки <code>autoCompactWindow</code></h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p><code>autoCompactWindow</code> тепер приймається у frontmatter subagent і визначеннях <code>--agents</code>, тож subagent стискає контекст до того, як заповниться вікно основної розмови.</p></dd><dt>Чому це важливо</dt><dd><p>Тривалі subagents можуть тримати менше контексту й залишатися сфокусованими, а не успадковувати розмір основного вікна. Це керування тиском контексту окремо для кожного агента.</p></dd><dt>Можливості</dt><dd><p>Довгі subagents для досліджень чи перегляду, які виконують багато кроків у циклі, можна тримати легкими. Викладачі можуть показати, як розмір контексту впливає на поведінку агента.</p></dd><dt>Як використати</dt><dd><p>Додайте <code>autoCompactWindow</code> до frontmatter subagent або до JSON-визначення <code>--agents</code>. Джерело не вказує одиниць виміру чи допустимого діапазону, тож спершу перегляньте документацію. Уникайте дуже малих значень: у відкритій issue повідомляють про помилки thrashing, які знищують subagents із малим вікном.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-bad">Сире</span></p><p class="reliability">відкритих багів: 45 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 7</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/anthropics/claude-code/issues/100932">Autocompact thrashing error with a small autoCompactWindow: counter is per model response, message blames files/tool output, subagents are killed</a></li><li><a href="https://github.com/anthropics/claude-code/issues/101067">[BUG] Auto-compaction fires at 281K–845K tokens on 2.1.296 for claude-opus-5-5 (documented default ~967K)</a></li><li><a href="https://github.com/anthropics/claude-code/issues/101567">[Bug] Agents consume excessive tokens without producing results</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Позначка raw, 45 відкритих багів і повідомлена збійна поведінка thrashing із малими вікнами; зачекайте на виправлення, перш ніж покладатися на це.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-3"><h3 id="card-3"><code>--debug</code> тепер показує час виконання hooks і позначає помилки в frontmatter</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p><code>--debug</code> записує в лог команду, plugin, результат і тривалість кожного command hook для викликів інструментів, промптів, SessionStart і Stop. Також називає нерозпізнані поля frontmatter у файлах власних агентів і дає підказки про помилки.</p></dd><dt>Чому це важливо</dt><dd><p>Повільні hooks і мовчки проігноровані поля з помилками в написанні раніше було важко знайти. Тепер обидва випадки видно в лозі.</p></dd><dt>Можливості</dt><dd><p>Профілюйте конфігурацію з великою кількістю hooks і скорочуйте затримку запуску. Виявляйте помилки, як-от неправильно написане поле у файлах агентів, перш ніж ділитися ними зі студентами чи колегами.</p></dd><dt>Як використати</dt><dd><p>Запустіть <code>claude --debug</code> і подивіться в рядках завершення hook на тривалість і результат, а потім оптимізуйте найповільніші. Після редагування файлу агента запустіть із <code>--debug</code> і перевірте повідомлення про нерозпізнані поля.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-bad">Сире</span></p><p class="reliability">відкритих багів: 28 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 12</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/anthropics/claude-code/issues/101100">Function hooks: classic.PermissionRequest is not aborted (next.signal) when the host answers the permission prompt</a></li><li><a href="https://github.com/anthropics/claude-code/issues/100930">[DOCS] With CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1, more MCP header variables read as empty than the docs say (e.g. API_KEY)</a></li><li><a href="https://github.com/anthropics/claude-code/issues/101452">[BUG] Mods: $.command.register refused for a user/project skill&#x27;s name is undocumented, says &quot;user&#x27;s&quot; for project skills, and the debug log omits the error</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Лише діагностичне логування без зміни поведінки; позначка raw і відкриті баги стосуються інших ділянок, тож ризик низький. Обмежено рівнем trial, бо виміряний статус — raw.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-4"><h3 id="card-4">Ліміт опису інструментів MCP збільшено вдвічі до 4,096 символів</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Типове обмеження на описи інструментів MCP, що надсилаються наперед, і на інструкції MCP server зросло з 2,048 до 4,096 символів.</p></dd><dt>Чому це важливо</dt><dd><p>Довші описи та інструкції більше не обрізаються, тож servers можуть краще пояснювати інструменти. Ціна — більше використаного контексту на кожен server.</p></dd><dt>Можливості</dt><dd><p>Автори MCP server можуть писати повніші настанови для складних інструментів. Складні конфігурації з багатьма servers варто перевірити щодо використання контексту.</p></dd><dt>Як використати</dt><dd><p>Перегляньте описи ваших MCP servers, які раніше обрізалися, і за потреби розширте їх. Якщо контексту бракує, натомість скоротіть надто докладні. Перегляньте документацію щодо налаштування, яке перевизначає ліміт.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 22</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Зміна типового значення, налаштування не потрібне; надійність невідома, але ефект легко спостерігати.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-5"><h3 id="card-5">Інструмент Read отримав <code>allow_large</code> для читання файлів повністю</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Опція <code>allow_large</code> дозволяє Claude прочитати текстовий файл понад звичайні обмеження розміру за один виклик, коли потрібен увесь файл і в контексті є місце.</p></dd><dt>Чому це важливо</dt><dd><p>Раніше великі файли доводилося читати частинами, що може втрачати міжфайловий контекст. Тепер це можна зробити за один прохід, коли цього вимагає завдання.</p></dd><dt>Можливості</dt><dd><p>Перегляд згенерованих схем, великих логів чи довгих документів за один раз. Це витрачає контекст, тож використовуйте опцію обдумано.</p></dd><dt>Як використати</dt><dd><p>За даними джерела, нічого налаштовувати не потрібно: Claude сам обирає цю опцію. Якщо завдання потребує великого файлу повністю, скажіть про це в промпті та стежте за використанням контексту.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 17</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Надійність невідома, відкритих багів не знайдено; головний ризик — заповнення контексту дуже великими файлами.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-6"><h3 id="card-6">Еталонні MCP servers досягли 1.0 з багатьма виправленнями</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Servers everything, filesystem, memory і sequential-thinking опубліковано як 1.0.0 на npm; fetch, git і time перейшли на 2026.10.10 на PyPI. Виправлення стосуються обробки сесій, визначення шляхів, перезапису файлів і блокування файлів пам&#x27;яті.</p></dd><dt>Чому це важливо</dt><dd><p>Саме ці servers більшість розробників копіюють як приклади або запускають напряму. Виправлення memory і filesystem, як-от заблоковані записи та збережені кінці рядків, усувають реальні проблеми безпеки даних.</p></dd><dt>Можливості</dt><dd><p>Стабільна основа для навчання MCP і для форків у власні servers. Server everything також слугує тестовою ціллю для протоколу.</p></dd><dt>Як використати</dt><dd><p>Оновіть пакети npm до 1.0.0, а пакети PyPI до 2026.10.10, якщо ви їх запускаєте. Повторно протестуйте поведінку дозволених каталогів і roots у filesystem, оскільки в цьому релізі змінився спосіб очікування roots.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 1</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Щойно випущено, надійність невідома, подальших виправлень ще немає; довгий список виправлень обнадіює, але в реальних умовах не перевірений.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/modelcontextprotocol/servers/releases/tag/v1.0.0">v1.0.0 · MCP reference servers releases</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-7"><h3 id="card-7">Claude in Chrome тепер запитує дозвіл на дії в браузері в кожній сесії</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Claude in Chrome запитує дозвіл на дії в браузері в кожній сесії, зокрема й підключених через <code>@browser</code>, як це робить термінал. Дозвіл для сайту на сесію зупиняє повторні запити.</p></dd><dt>Чому це важливо</dt><dd><p>Автоматизація браузера тепер дотримується тієї самої моделі дозволів, що й дії в терміналі: це безпечніше, але додає запити до процесів без нагляду.</p></dd><dt>Можливості</dt><dd><p>Безпечніші демонстрації на заняттях і клієнтських сесіях. Дозвольте довірений сайт один раз за сесію, щоб робота йшла плавно.</p></dd><dt>Як використати</dt><dd><p>Коли з&#x27;явиться запит, дозвольте конкретний сайт на сесію, щоб зупинити повторні запити. Для запланованої чи автоматичної роботи в браузері перевірте, що запити не зупиняють виконання.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: невідомо · виправлень після релізу: 0 · днів від релізу: 4 · згадок в обговореннях: 19</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-good">Впроваджувати</span></p><p>Зміна типового дозволу, що застосовується автоматично; надійність невідома, але поведінка проста.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></dd></dl></article></section><section aria-labelledby="lesson"><h2 id="lesson">Урок тижня</h2><h3>Контроль вартості multi-agent fan-out</h3><p>Fan-out перетворює одне завдання на багато викликів агентів, тож витрати й контекст ростуть разом із кількістю агентів. У змінах цього тижня є три важелі. Перший — обмеження витрат: Managed Agents рекомендує бюджет сесії, бо кожен агент у запуску workflow витрачає токени. Другий — вибір model для кожного шару: у Claude Code <code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> задає одну model для всіх агентів workflow, а інші subagents зберігають свої. Третій — обмеження контексту на агента: frontmatter subagent приймає <code>autoCompactWindow</code>, проте відкриті issues повідомляють про проблеми з малими значеннями, тож перевіряйте, перш ніж покладатися на це. Метод такий: спершу запустіть невеликий зріз — десять елементів, а не сотні. Виміряйте токени, час і якість результату, а потім змінюйте по одному важелю. Записуйте, який важіль на яке число вплинув. Використовуйте дешевшу model для механічних кроків, як-от вилучення полів, а потужнішу — для кроку синтезу. Перед масштабуванням додайте правило зупинки, наприклад бюджет або ліміт елементів.</p><h4>Вправа на 15 хвилин</h4><p>Оберіть пакетне завдання, наприклад підсумувати 10 файлів у теці. Запустіть його через subagent або workflow на вашій типовій model і запишіть токени та час. Потім задайте для <code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> дешевшу model і повторіть запуск. Порівняйте обидва результати та напишіть нотатку з трьох рядків про вартість і якість.</p><ul class="sources"><li><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes · 2026-10-09</a></li><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-09</a></li></ul></section><section aria-labelledby="brief"><h2 id="brief">Коротко</h2><ul class="brief"><li><a href="https://github.com/ollama/ollama/releases/tag/v0.40.3">v0.40.3 · Ollama releases</a> — Ollama 0.40.3 прибирає попередження про конектори Claude з <code>ollama launch claude</code>, скасовує попередження про service-tier для Codex і призупиняє фонові оновлення model, які сповільнювали інтенсивні запити на embedding.</li><li><a href="https://simonwillison.net/2026/Oct/12/web-edit/">web-edit 0.1a0 · Simon Willison — everything</a> — web-edit 0.1a0 — це вебінтерфейс на Python для редагування файлів у теці, призначений для роботи через Tailscale, тож облікові дані можна редагувати з телефона, не пропускаючи їх через</li></ul></section><section aria-labelledby="all-changes"><h2 id="all-changes">Усі зміни</h2><div class="changelog-group"><h3 lang="en"><a href="https://code.claude.com/docs/llms.txt">Claude Code docs — new pages</a></h3><ul lang="en"><li>Auto mode classifier request charges: Resolve the Claude Code notice saying this session isn&#x27;t eligible for auto mode&#x27;s no-charge classifier requests: what it means, why it appears, and what to do.</li><li>French (222 pages): Documentation for French.</li><li>German (222 pages): Documentation for German.</li><li>Italian (222 pages): Documentation for Italian.</li><li>Japanese (222 pages): Documentation for Japanese.</li><li>Spanish (222 pages): Documentation for Spanish.</li><li>Korean (222 pages): Documentation for Korean.</li><li>Simplified Chinese (222 pages): Documentation for Simplified Chinese.</li><li>Traditional Chinese (222 pages): Documentation for Traditional Chinese.</li><li>Russian (222 pages): Documentation for Russian.</li><li>Indonesian (222 pages): Documentation for Indonesian.</li><li>Brazilian Portuguese (222 pages): Documentation for Brazilian Portuguese.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.296</a></h3><ul lang="en"><li>Added <code>autoCompactWindow</code> to subagent frontmatter and <code>--agents</code> definitions, so a subagent can auto-compact earlier than the main conversation&#x27;s window</li><li>Added <code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> to run every workflow agent on one model while other subagents keep theirs</li><li>Added <code>CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS</code> environment variable to set a longer maximum delay for the backoff when retrying an overloaded (529) request</li><li>Added a note in <code>/plugin</code> on a plugin whose hooks are left out because another enabled plugin has the same name</li><li>Added an <code>allow_large</code> option to the Read tool so Claude can read a text file past the usual size limits in one call when it needs the whole file and the context has room</li><li>Added creating, editing and deleting workspace and channel memory files on the Activity page&#x27;s Memory tab for members with the Claude Tag Admin permission</li><li>Changed the default limit on MCP tool descriptions sent up front and on MCP server instructions from 2,048 to 4,096 characters</li><li>Changed <code>←</code>: a turn or <code>!</code> command started while the session moves to the background is now stopped instead of finishing out of sight</li><li>Changed Claude in Chrome to ask before browser actions in every session, including one connected with <code>@browser</code>, as the terminal does; allowing a site for the session stops repeat asks</li><li>Changed Claude in Slack to show the footer with the session link, model and cost only on its newest reply in a thread; the reply before it drops the footer</li><li>Improved fullscreen mode: the link under the mouse pointer is now underlined to show it can be opened</li><li>Improved transcript toggle (ctrl+o) responsiveness in code-heavy conversations by caching syntax-highlighted code blocks</li><li>Improved the errors for a refused cloud session: they now say why your organization&#x27;s policy couldn&#x27;t be loaded, and name an API key or auth token that overrides your claude.ai login</li><li>Improved <code>--debug</code> output to name unrecognized frontmatter fields in custom agent files, with a hint for likely typos</li><li>Improved auto mode: a tool call that wasn&#x27;t run because auto mode&#x27;s check had no usable answer now shows as a dim &quot;Not run&quot; row instead of a red error</li><li>Improved <code>--debug</code> output for hooks: command hooks on tool calls, prompts, SessionStart and Stop now log their command, plugin, outcome and duration when they finish, so a slow hook is identifiable</li><li>Improved <code>CLAUDE_CODE_TRANSCRIPT_LOCAL_GC</code>: a large transcript file is no longer rewritten when that would free under 10% of it</li><li>Improved Code Review admin settings to say why a setting couldn&#x27;t be saved, such as a policy restriction, instead of a generic failure message</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Не показано змін: 61</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul lang="en"><li>You can now let a Claude Managed Agents agent use <a href="https://platform.claude.com/docs/en/managed-agents/multiagent-orchestration#dynamic-workflows">dynamic workflows</a>, in beta with the <code>managed-agents-2026-04-01</code> beta header. For work with many pieces, such as reviewing hundreds of documents, the agent can write a workflow. A workflow is a program that runs many agents in phases and combines their results.</li><li>Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (<code>budget_tokens</code>), the sampling parameters <code>temperature</code>, <code>top_p</code>, and <code>top_k</code>, and assistant message prefill can each return a 400 error. <code>computer_20250124</code> also returns a 400 error: use the <code>computer_toolset_20260801</code> toolset on the Claude API and Google Cloud, or <code>computer_20251124</code> on Amazon Bedrock.</li></ul><p class="omitted"><a href="https://platform.claude.com/docs/en/release-notes/overview">Не показано змін: 1</a></p></div></section></main>
+<footer><p>Дата випуску: 2026-10-13. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>
