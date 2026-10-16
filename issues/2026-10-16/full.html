@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дайджест ШІ-інструментів — 2026-10-16</title>
+<meta name="description" content="Що нового в Claude та інших ШІ-інструментах: аналіз, можливості й вердикти, випуск 2026-10-16.">
+<style>:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #4b5563;
+  --border: #d9dde3;
+  --link: #0a4fa3;
+  --link-visited: #5b3a9c;
+  --accent: #0a4fa3;
+  --focus: #0a4fa3;
+  --code-bg: #eef1f5;
+  --chip-good-bg: #e3f4e8;
+  --chip-good-fg: #14532d;
+  --chip-info-bg: #e3edfb;
+  --chip-info-fg: #0b3d80;
+  --chip-warn-bg: #fdf0d5;
+  --chip-warn-fg: #6b4000;
+  --chip-bad-bg: #fde2df;
+  --chip-bad-fg: #8a1c13;
+  --chip-neutral-bg: #eceef1;
+  --chip-neutral-fg: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --fg: #f0f2f5;
+    --muted: #c2c8d2;
+    --border: #3a3f47;
+    --link: #7db2ff;
+    --link-visited: #c9a6ff;
+    --accent: #7db2ff;
+    --focus: #7db2ff;
+    --code-bg: #232830;
+    --chip-good-bg: #163a24;
+    --chip-good-fg: #bdeccb;
+    --chip-info-bg: #15304f;
+    --chip-info-fg: #c4dcff;
+    --chip-warn-bg: #3d2e0c;
+    --chip-warn-fg: #f7dc9c;
+    --chip-bad-bg: #45191a;
+    --chip-bad-fg: #ffc9c4;
+    --chip-neutral-bg: #2a2f36;
+    --chip-neutral-fg: #d5d9df;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(15px, 0.9vw + 12px, 18px);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+main, header, footer {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+li, p, code, a, td, th, h1, h2, h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+nav[aria-label="tiers"] ul,
+nav.tiers ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+nav[aria-label="tiers"] a[aria-current="page"],
+nav.tiers a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.changelog-group {
+  margin-bottom: 1.25rem;
+}
+
+.changelog-group h3 {
+  font-size: 1rem;
+}
+
+.pick {
+  margin-bottom: 1.25rem;
+}
+
+.omitted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-fields dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+
+.card-fields dd {
+  margin: 0.15rem 0 0;
+}
+
+.card-fields dd p {
+  margin: 0.2rem 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.4rem 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.chip-good {
+  background: var(--chip-good-bg);
+  color: var(--chip-good-fg);
+}
+
+.chip-info {
+  background: var(--chip-info-bg);
+  color: var(--chip-info-fg);
+}
+
+.chip-warn {
+  background: var(--chip-warn-bg);
+  color: var(--chip-warn-fg);
+}
+
+.chip-bad {
+  background: var(--chip-bad-bg);
+  color: var(--chip-bad-fg);
+}
+
+.chip-neutral {
+  background: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
+}
+
+.reliability,
+.vendor {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bugs,
+.sources,
+.history {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.brief li {
+  margin-bottom: 0.3rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+dt, dd {
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .radar thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .radar tr,
+  .radar td {
+    display: block;
+  }
+
+  .radar tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .radar td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .radar td:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .radar .history {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  main, header, footer {
+    max-width: none;
+  }
+
+  main {
+    columns: 2;
+    column-gap: 8mm;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2, h3 {
+    break-after: avoid;
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  ul {
+    margin: 0.2rem 0;
+  }
+
+  li, p {
+    break-inside: avoid;
+  }
+
+  nav[aria-label="tiers"],
+  nav.tiers {
+    display: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  .chip {
+    background: none;
+    color: #000;
+    border-color: #000;
+  }
+
+  dt {
+    break-after: avoid;
+  }
+
+  .card h3 {
+    break-after: avoid;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+</style>
+</head>
+<body>
+<header><h1>Дайджест ШІ-інструментів — 2026-10-16</h1><nav class="tiers" aria-label="Навігація"><ul><li><a href="index.html">Огляд</a></li><li><a href="medium.html">Детально</a></li><li><a href="full.html" aria-current="page">Повністю</a></li><li><a href="../../radar.html">Радар</a></li></ul></nav></header>
+<main><section aria-labelledby="trends"><h2 id="trends">Тенденції тижня</h2><p>Claude Code розвивається у бік спостережуваності та програмованості: span-и OpenTelemetry тепер відповідають конвенціям GenAI, записи про рішення щодо інструментів фіксують, хто ухвалив рішення — класифікатор auto mode чи правило, а mods отримують hooks для промптів і workflow-агентів. Для автономних запусків з&#x27;являються запобіжники, наприклад обмеження часу очікування скидання ліміту використання в режимі повторних спроб. Конкуруючі інструменти рухаються в тому самому напрямку: Codex додає коригування посеред ходу та паралельні інструменти лише для читання, а Copilot розширюється на чат-застосунки з підтримкою кількох репозиторіїв.</p></section><section aria-labelledby="cards"><h2 id="cards">Головне</h2><article class="card" aria-labelledby="card-0"><h3 id="card-0">Трейси OpenTelemetry отримали атрибути GenAI та вердикти класифікатора</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Span-и трейсів тепер містять атрибути семантичних конвенцій GenAI, як-от <code>gen_ai.provider.name</code>, <code>gen_ai.conversation.id</code>, <code>gen_ai.tool.name</code> та <code>error.type</code>. Події <code>tool_decision</code> отримали поля <code>classifier_verdict</code> і <code>permission_mode</code>.</p></dd><dt>Чому це важливо</dt><dd><p>Стандартні назви атрибутів дозволяють відображати трейси Claude Code в універсальних інструментах спостережуваності без власного мапінгу. Нові поля подій розділяють рішення класифікатора auto mode та рішення на основі правил дозволів, що раніше було неочевидно під час аудиту причин виконання виклику інструмента.</p></dd><dt>Можливості</dt><dd><p>Створіть дашборд використання інструментів у розрізі розмов, типів помилок і частоти, з якою дії схвалює класифікатор, а не ваші правила. Це допоможе налаштувати правила дозволів і дасть конкретну вправу зі спостережуваності для студентів або під час впровадження в команді.</p></dd><dt>Як використати</dt><dd><p>Перегляньте офіційну документацію з моніторингу, щоб дізнатися, як увімкнути експорт OpenTelemetry, і спрямуйте його на локальний колектор. Фільтруйте події <code>tool_decision</code> за <code>classifier_verdict</code> і <code>permission_mode</code>. Групуйте span-и за <code>gen_ai.conversation.id</code>, щоб прослідкувати одну сесію.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 34</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Обидві зміни існують 1–2 дні, виправлень чи відкритих багів не зафіксовано, але мітка невідома, тож доказів небагато.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-14</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-1"><h3 id="card-1">Retry watchdog може обмежувати час очікування скидання лімітів використання</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Нова змінна <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS</code> змушує автономний режим повторних спроб (<code>CLAUDE_CODE_RETRY_WATCHDOG</code>) завершувати запит, якщо ліміт використання скидається надто нескоро, замість очікування.</p></dd><dt>Що змінилося з минулого випуску</dt><dd><p>Випуск 2026-10-09: Впроваджувати · Невідомо · відкритих багів: 0 · виправлень після релізу: 0. Тепер: Спробувати · Невідомо · відкритих багів: 0 · виправлень після релізу: 0.</p></dd><dt>Чому це важливо</dt><dd><p>Автономні запуски на споживчих підписках можуть зависати на години через ліміт. Верхня межа дає змогу завданню швидко завершитися з помилкою, щоб планувальник чи обгортка могли відреагувати, а не мовчки зависати.</p></dd><dt>Можливості</dt><dd><p>Заплановані автоматизації можуть перейти до пізнішого запуску, надіслати сповіщення або обрати дешевший шлях, якщо ліміт скидається нескоро. Нічні пакетні завдання отримують передбачуваний час виконання.</p></dd><dt>Як використати</dt><dd><p>Задайте <code>CLAUDE_CODE_RETRY_WATCHDOG</code> разом із <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS</code> у середовищі завдання, значення — у мілісекундах. Точну поведінку під час завершення перевірте в документації та протестуйте з невеликим значенням.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 34</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Корисно для запланованих завдань; функції 1 день, мітка невідома, багів і виправлень не зафіксовано, а кількість згадок у джерелах висока.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-15</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-2"><h3 id="card-2">Mods отримали переписування workflow-агентів, перегляд транскриптів і hook зміни промпту</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Mods тепер можуть переписувати <code>prompt</code> і <code>model</code> workflow-агента в hook <code>agent.spawn</code>, показувати транскрипт агента через <code>$.ui.view({ agentId })</code> та реагувати на <code>prompt.change</code>, коли текст промпту змінюється без введення з клавіатури.</p></dd><dt>Що змінилося з минулого випуску</dt><dd><p>Випуск 2026-10-06: Впроваджувати · Невідомо · відкритих багів: невідомо · виправлень після релізу: 0. Тепер: Стежити · Працює із застереженнями · відкритих багів: 1 · виправлень після релізу: 0.</p></dd><dt>Чому це важливо</dt><dd><p>Mods тепер можуть керувати workflow-агентами, а не лише забороняти їх, наприклад маршрутизуючи моделі або додаючи інструкції. Нові hooks розширюють те, чим mod може керувати та що може спостерігати.</p></dd><dt>Можливості</dt><dd><p>Створіть mod, який знижує клас моделей subagent для простих завдань, додає на початок workflow-промптів правила проєкту або логує зміни історії промптів. Хороший навчальний матеріал для проєктування розширень.</p></dd><dt>Як використати</dt><dd><p>У hook <code>agent.spawn</code> вашого mod повертайте змінені <code>prompt</code> або <code>model</code>. Викликайте <code>$.ui.view({ agentId })</code>, щоб переглянути агента, і <code>$.ui.view({})</code>, щоб повернутися. Спершу тестуйте в терміналі, оскільки для розширення VS Code повідомлялося про помилку з накладанням інтерфейсу.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-warn">Працює із застереженнями</span></p><p class="reliability">відкритих багів: 1 · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 45</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/anthropics/claude-code/issues/102008">[BUG] An agent started by $.agent.spawn from a $.clock callback can’t reach its own plugin’s tool.call hook</a></li><li><a href="https://github.com/anthropics/claude-code/issues/102134">[BUG] session.compact mod hook no longer raised in 2.1.299 (manual and automatic compaction)</a></li><li><a href="https://github.com/anthropics/claude-code/issues/102594">[BUG] VS Code extension: a mod&#x27;s AbovePrompt band covers the `/` and `@` menus</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Мітка — із застереженнями, у кожного пункту по одному відкритому багу: відсутній compact hook у 2.1.299, прогалина plugin hook для породжених агентів і накладання меню у VS Code.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-14</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-3"><h3 id="card-3">Опція передавати згадки <code>@</code> як шляхи, а не вміст</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p><code>CLAUDE_CODE_DISABLE_FILE_MENTIONS</code> змушує Claude отримувати лише шляхи файлів зі згадок <code>@</code> і читати їх своїми файловими інструментами, а не отримувати вміст файлів безпосередньо в запиті.</p></dd><dt>Чому це важливо</dt><dd><p>Вбудовування великих файлів може роздувати контекст і оминати обробку файловими інструментами. Згадки лише зі шляхами переводять читання в звичайний потік інструментів, де діють дозволи та hooks.</p></dd><dt>Можливості</dt><dd><p>Чистіший контекст у великих репозиторіях і послідовне покриття hooks для кожного читання файлу, що корисно, якщо ви аудитуєте чи обмежуєте читання.</p></dd><dt>Як використати</dt><dd><p>Виконайте export <code>CLAUDE_CODE_DISABLE_FILE_MENTIONS=1</code> (допустимі значення перевірте в документації) перед запуском сесії, потім користуйтеся згадками <code>@</code> як зазвичай і переконайтеся, що Claude читає файл через виклик інструмента.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-neutral">Невідомо</span></p><p class="reliability">відкритих багів: 0 · виправлень після релізу: 0 · днів від релізу: 2 · згадок в обговореннях: 13</p></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-info">Спробувати</span></p><p>Невелика зміна, яку легко скасувати; їй 2 дні, відкритих багів немає, але мітка невідома.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-14</a></li></ul></dd></dl></article><article class="card" aria-labelledby="card-4"><h3 id="card-4">Codex 0.163.0 додає коригування, паралельні інструменти лише для читання та пошук налаштувань</h3><dl class="card-fields"><dt>Що з&#x27;явилося</dt><dd><p>Codex 0.163.0 дає змогу надсилати уточнення посеред відповіді, щоб скоригувати її, запускає незалежні інструменти лише для читання паралельно, додає <code>/config</code> з пошуком, клавішу leader у <code>/keymap</code> і відновлює дозволи у поновлених потоках.</p></dd><dt>Чому це важливо</dt><dd><p>Коригування посеред ходу та паралельні запити — функції, з якими користувачі Claude Code, ймовірно, захочуть порівняти свій інструмент. Відновлення схвалень під час поновлення також покращує керування сесіями.</p></dd><dt>Можливості</dt><dd><p>Використовуйте як еталон для власних робочих процесів із hooks і subagents або як другого агента для порівняння на заняттях.</p></dd><dt>Як використати</dt><dd><p>Оновіть Codex, відкрийте <code>/config</code> для пошуку налаштувань і спробуйте надіслати уточнення, поки триває хід. Перед оновленням прочитайте примітки про виведений з обігу patched zsh і повідомлення про міграцію.</p></dd><dt>Чи працює</dt><dd><p class="chips"><span class="chip chip-bad">Сире</span></p><p class="reliability">відкритих багів: 72 · виправлень після релізу: 0 · днів від релізу: 1 · згадок в обговореннях: 1</p><ul class="bugs" aria-label="Приклади відкритих багів"><li><a href="https://github.com/openai/codex/issues/54436">fix(keymap): leader settings written by /keymap break older shared-config readers</a></li><li><a href="https://github.com/openai/codex/issues/54408">[0.162.1][macOS] Deleting daemon startup directory still breaks account/read and TUI bootstrap</a></li><li><a href="https://github.com/openai/codex/issues/54441">Windows elevated sandbox: repeated UAC prompts because offline firewall proxy_ports flip between project-level network_proxy threads and daemon threads</a></li></ul></dd><dt>Вердикт</dt><dd><p class="chips"><span class="chip chip-warn">Стежити</span></p><p>Мітка — raw, 72 відкриті баги, зокрема проблеми пісочниці Windows і демона macOS, тож краще дочекатися проміжних релізів.</p></dd><dt>Джерела</dt><dd><ul class="sources"><li><a href="https://github.com/openai/codex/releases/tag/rust-v0.163.0">0.163.0 · OpenAI Codex CLI releases</a></li></ul></dd></dl></article></section><section aria-labelledby="lesson"><h2 id="lesson">Урок тижня</h2><h3>Аудит рішень агента за допомогою трейсів OpenTelemetry</h3><p>Без даних важко налаштувати дозволи агента. Вихідні дані OpenTelemetry у Claude Code тепер використовують атрибути GenAI у span-ах, а події <code>tool_decision</code> містять <code>classifier_verdict</code> і <code>permission_mode</code>. Разом вони відповідають на три запитання: що зробив агент, у якій розмові та хто це дозволив — правило чи класифікатор auto mode. Практика проста. Експортуйте телеметрію до локального колектора, виконайте звичайне завдання, а потім згрупуйте події за <code>gen_ai.conversation.id</code>. У кожній групі підрахуйте виклики інструментів за <code>gen_ai.tool.name</code> і розділіть рішення за <code>classifier_verdict</code>. Інструменти, які класифікатор часто схвалює, — кандидати на явні правила дозволу, що робить поведінку передбачуваною. Інструменти з частими значеннями <code>error.type</code> вказують на несправні налаштування, як-от відсутні залежності або hooks, що блокують виконання. У навчанні ті самі трейси показують студентам, що насправді робить агент між промптами. Спершу перегляньте офіційну документацію з моніторингу, щоб дізнатися, як увімкнути експорт і який бекенд обрати, оскільки у вихідних текстах налаштування не описано.</p><h4>Вправа на 15 хвилин</h4><p>Увімкніть експорт OpenTelemetry до локального колектора або вивід у консоль згідно з документацією. Виконайте одне невелике завдання, потім виведіть список викликів інструментів із <code>gen_ai.tool.name</code>, <code>permission_mode</code> і <code>classifier_verdict</code>. Напишіть одне правило дозволу для інструмента, який класифікатор схвалював найчастіше.</p><ul class="sources"><li><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code changelog · 2026-10-14</a></li></ul></section><section aria-labelledby="brief"><h2 id="brief">Коротко</h2><ul class="brief"><li><a href="https://github.blog/changelog/2026-10-15-copilot-in-slack-and-teams-adds-model-and-repository-updates">Multi-repo support and other improvements for GitHub Copilot in Slack and Microsoft Teams · GitHub Changelog</a> — GitHub Copilot у Slack і Teams працює з кількома репозиторіями в одній розмові, приймає @GitHub у будь-якому місці повідомлення та використовує спільні гілки Slack як контекст.</li><li><a href="https://viceconsole.fyi/blog/2026/10/10/what-i-self-host/">What I self-host · Hacker News front page</a> — Обговорення на Hacker News «What I self-host» зібрало понад 300 балів і 200 коментарів; у тексті запису подробиць немає, тому розглядайте це лише як ознаку інтересу спільноти.</li></ul></section><section aria-labelledby="all-changes"><h2 id="all-changes">Усі зміни</h2><div class="changelog-group"><h3 lang="en"><a href="https://code.claude.com/docs/llms.txt">Claude Code docs — new pages</a></h3><ul lang="en"><li>Review locally with /code-review: Run <code>/code-review</code> in a Claude Code session to find bugs in your branch&#x27;s changes, point the review at a pull request or path, and have Claude apply the fixes.</li><li>Code Review: Catch bugs in GitHub pull requests with Code Review: Claude reviews each change, verifies its findings, and comments inline. For Team and Enterprise plans</li><li>Set up Code Review: Turn on Code Review for your Claude organization: connect GitHub, install the Claude GitHub App, choose repositories, and set when reviews run</li><li>Customize Code Review: Tune what Code Review flags on your pull requests with REVIEW.md and CLAUDE.md: recalibrate severity, skip paths, add checks, and see which copy applies.</li><li>Read and request reviews on a pull request: Read Code Review findings on your GitHub pull request, respond to or dismiss them, and request a review with <code>@claude review</code>.</li><li>Code Review costs and usage: Estimate and cap what your organization spends on Claude Code Review: how reviews are billed through usage credits, what drives cost, and where to track usage.</li><li>Troubleshoot Code Review: Fix a Code Review that didn&#x27;t start, failed, or was skipped for budget, find missing findings, and resolve setup and <code>REVIEW.md</code> problems.</li><li>French (228 pages): Documentation for French.</li><li>German (228 pages): Documentation for German.</li><li>Italian (228 pages): Documentation for Italian.</li><li>Japanese (228 pages): Documentation for Japanese.</li><li>Spanish (228 pages): Documentation for Spanish.</li><li>Korean (228 pages): Documentation for Korean.</li><li>Simplified Chinese (228 pages): Documentation for Simplified Chinese.</li><li>Traditional Chinese (228 pages): Documentation for Traditional Chinese.</li><li>Russian (228 pages): Documentation for Russian.</li><li>Indonesian (228 pages): Documentation for Indonesian.</li><li>Brazilian Portuguese (228 pages): Documentation for Brazilian Portuguese.</li></ul></div><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Claude Code 2.1.299–2.1.301</a></h3><ul lang="en"><li>Added <code>CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS</code> so unattended retry mode (<code>CLAUDE_CODE_RETRY_WATCHDOG</code>) ends a request at a usage limit that resets too far away instead of waiting</li><li>Added OpenTelemetry tracing guidance to the <code>claude-api</code> skill, including setting up trace destinations with the <code>ant</code> CLI</li><li>Added the <code>%</code> motion to vim mode: jump to the matching bracket, alone or with d/c/y</li><li>Added <code>rows</code> to a mod&#x27;s <code>Input</code>: a text field of several lines in the terminal, where Enter submits and Shift+Enter or a backslash before Enter starts a new line</li><li>Added <code>classifier_verdict</code> and <code>permission_mode</code> to OpenTelemetry <code>tool_decision</code> events, so auto mode classifier decisions can be told apart from permission rules</li><li>Added <code>classifier_category</code> to OpenTelemetry <code>tool_decision</code> events, naming the built-in rule a classifier block matched, when <code>OTEL_LOG_TOOL_DETAILS=1</code></li><li>Added LaTeX math rendering in Claude&#x27;s responses, including <code>$$</code> and multi-line <code>\[ … \]</code> blocks and inline <code>$…$</code> and <code>\(…\)</code> math</li><li>Added a &quot;Get more usage&quot; link to the usage-limit banner for Pro and Max plans in the VS Code and JetBrains panels</li><li>Added <code>virtualText</code> to a mod&#x27;s prompt decorations: text drawn in the prompt box that never enters the draft or the submitted prompt</li><li>Added <code>cache_creation_5m_tokens</code> and <code>cache_creation_1h_tokens</code> to the OpenTelemetry <code>api_request</code> event, splitting cache writes by lifetime</li><li>Added <code>$.ui.view({ agentId })</code> for mods: shows an agent&#x27;s transcript in the main view when you ask, and <code>$.ui.view({})</code> goes back</li><li>Added <code>/advisor</code> on Claude Platform on AWS; no advisor runs until you pick one with <code>/advisor</code>, <code>advisorModel</code> or <code>--advisor</code>, and <code>CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1</code> turns it off</li><li>Added OpenTelemetry GenAI semantic-convention attributes to trace spans, such as <code>gen_ai.provider.name</code>, <code>gen_ai.conversation.id</code>, <code>gen_ai.tool.name</code> and <code>error.type</code></li><li>Added support for rewriting a workflow agent&#x27;s <code>prompt</code> and <code>model</code> in the <code>agent.spawn</code> mod hook, which could only refuse workflow agents before</li><li>Added the <code>prompt.change</code> mod hook, raised when the prompt box&#x27;s text changes without a typed edit: a recalled history entry, a clear, an undo, or a plugin&#x27;s fill</li><li>Added the <code>claudeCode.attachSelection</code> setting to stop text selected in the editor from being added to your messages</li><li>Added support for Slack Connect channels: an Owner or Claude Tag admin can let Claude in Slack answer in channels shared with another organization; it&#x27;s off by default</li><li>Added a private Allow once / Deny card in Slack threads for connector actions that need your approval, so Claude asks instead of refusing; others only see that it&#x27;s waiting on you</li><li>Added support for Slack voice clips in Claude in Slack: Claude reads Slack&#x27;s transcript of a clip when Slack has one</li><li>Added <code>CLAUDE_CODE_DISABLE_FILE_MENTIONS</code> environment variable: Claude gets the paths of <code>@</code> file mentions to read with its file tools, not the files&#x27; contents</li><li>Added idle compaction in the terminal: a 200K+ token conversation left idle for about 54 minutes is compacted before its one-hour prompt cache expires, so your next message doesn&#x27;t reprocess it all</li><li>Added <code>CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS</code> to change idle compaction&#x27;s 200K-token minimum; <code>&quot;idleCompaction&quot;: false</code> in settings.json turns it off. Both need v2.1.290 or later</li><li>Added <code>size</code>, <code>weight</code>, <code>mono</code> and <code>tabular</code> to a mod&#x27;s <code>Text</code> and named spacing steps (<code>xs</code> to <code>xl</code>) to its <code>Box</code>; <code>bold</code> is deprecated in favor of <code>weight</code></li><li>Added the skill&#x27;s frontmatter, source, plugin name and file path to what a mod&#x27;s <code>skill.prompt</code> hook receives</li><li>Added <code>/effort</code> and <code>/fast</code> in agent view to set what new sessions start with; a bare <code>/model</code>, <code>/effort</code> or <code>/fast</code> there now opens a picker</li><li>Added a &quot;safe mode&quot; line to the agents view peek panel for background sessions started with <code>--safe-mode</code></li><li>Added a one-time note when plan mode won&#x27;t ask before most edits or commands because bypass permissions is available</li><li>Added <code>--disallow-tools</code> and a <code>disallowed_tools</code> case field to <code>claude plugin eval</code> to keep specific built-in tools, such as Agent, out of eval runs</li><li>Added a <code>queue</code> door to the <code>session.append</code> mod hook, so a mod can make the transcript&#x27;s queue records differ from the prompt as sent</li><li>Added a note in <code>/plugin</code> and <code>claude plugin validate</code> naming a mod&#x27;s hooks that are skipped where an organization manages Claude Code</li><li>Added <code>/usage</code> warnings for max effort, workflows, always-on context and large tool results</li><li>Added the ability for Claude in Slack to delete a canvas it created in a channel when someone asks it to</li><li>Changed a mod hook&#x27;s <code>.catch</code> handler to run only when the hook throws or times out; events raised beneath the hook&#x27;s own calls now skip that hook without asking its <code>.catch</code></li><li>Changed a mod&#x27;s <code>$.env.set</code> to resolve with <code>{}</code> once the variable is set or unset, or with <code>{ deny }</code> saying why when the write is not made</li><li>Changed <code>CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST</code> sessions to ignore CA-bundle, tool-proxy, git TLS and git config variables like <code>SSL_CERT_FILE</code> in settings; under Claude Desktop, only in project settings</li><li>Changed exit to force-kill background commands still running 1.5 seconds after being asked to stop; in fullscreen mode they could previously be left running</li><li>Changed large requests to api.anthropic.com to use gzip compression even when telemetry is disabled; set <code>CLAUDE_CODE_GZIP_REQUEST_BODIES=0</code> to turn it off</li><li>Changed the <code>claude-api</code> skill to leave Managed Agents sessions in place unless you ask to archive or delete them</li><li>Changed background sessions to resume a carried workflow through the Workflow tool&#x27;s approval instead of running it from the handoff file</li><li>Changed local session transcripts to also record each API request&#x27;s system prompt, tools and parameters, so a transcript you choose to share can reproduce a request exactly</li><li>Changed the <code>/sandbox</code> mode options to read &quot;Sandbox commands&quot; instead of &quot;Sandbox BashTool&quot;</li><li>Changed <code>PermissionRequest</code> hooks in Cowork cloud sessions: a <code>setMode</code> update in a hook&#x27;s allow is now ignored; the rest of the approval still applies</li><li>Changed hooks: <code>updatedInput</code> from PreToolUse and PermissionRequest hooks is now validated like Claude&#x27;s own input: unknown keys are dropped, and input the tool rejects denies the call</li><li>Changed access bundles an admin attached to a Slack channel to keep applying once the channel becomes a Slack Connect channel, with no need to remove and re-attach them</li><li>Changed plugin hooks and workflow scripts to refuse values they hand back that nest deeper than 28,000 levels, with an error naming the limit (workflow scripts allowed 100,000)</li><li>Changed actions a plugin hook can block to be refused, not let through, when the hook cannot be handed them or cannot hand back its answer; a tool that already ran has its result withheld</li><li>Changed requests to claude.ai&#x27;s connector proxy and to Anthropic-hosted MCP servers to no longer follow HTTP redirects; redirects by a connector&#x27;s own server are unaffected</li><li>Changed skill and command loading: one whose file or folder name has hidden, direction-changing or blank-like characters, <code>&lt;</code> or <code>&gt;</code> is no longer offered until renamed; such a <code>name:</code> is ignored</li><li>Changed <code>ui.render</code> trees in <code>claude plugin test</code>: each mod&#x27;s Box or Text root now carries <code>part: { plugin }</code> naming the mod, so exact-tree assertions must include it</li><li>Changed WebFetch page reads to pick their effort as web searches do: the caller&#x27;s level on the caller&#x27;s own model, otherwise the level settings give the small model</li><li>Changed <code>claude plugin test</code> to fail a call to a mod&#x27;s served <code>$</code> method that has not answered within ten seconds, as a session does</li><li>Changed MCP allow rules to reach only the server they name: <code>mcp__a</code> no longer allows a server named <code>a__b</code> or <code>a_</code>; write <code>mcp__&lt;server&gt;__*</code> with the server&#x27;s whole normalized name</li><li>Changed agent <code>tools:</code> lists to take only the named MCP server&#x27;s tools; list a server whose name contains <code>__</code> as <code>mcp__&lt;whole name&gt;__*</code></li><li>Changed cloud session and Remote Control MCP connectors to negotiate MCP protocol version 2026-07-28 by default on installs that fetch no flags; <code>MCP_PROTOCOL_NEGOTIATION=legacy</code> opts out</li><li>Changed MCP tool descriptions and server instructions from Anthropic&#x27;s first-party MCP servers at <code>api.anthropic.com</code> to reach Claude in full instead of being cut at 4,096 characters</li><li>Changed auto mode in Cowork cloud sessions: a <code>PermissionRequest</code> hook can no longer approve shell commands or subagents; those prompts wait or are denied</li><li>Changed the resume command printed at exit: it names the session by its ID and no longer by its name, so that nothing in a session name can run when the line is pasted</li><li>Changed the resume command printed at exit of a worktree session: it uses <code>-w</code> and <code>-r</code> if the long flags do not fit the terminal. If neither fits a kept worktree, rows above it say where to run it</li><li>Changed <code>/btw</code> side questions in non-interactive sessions to return a timeout error when still unanswered after 11 minutes</li><li>Changed <code>UserPromptSubmit</code> hooks to run before a skill or custom slash command expands, so a hook that blocks the prompt now also stops its embedded shell commands</li><li>Changed a skill&#x27;s own front-matter <code>UserPromptSubmit</code> hook to first run on the prompt after the one that invokes the skill</li><li>Changed the <code>turn.start</code> mod hook to also hear subagents&#x27; and teammates&#x27; turns, not only the main loop&#x27;s; tell them apart by <code>e.agentId</code> (absent on the main loop)</li><li>Changed the errors shown when <code>/ultrareview</code> can&#x27;t upload a repository to stop suggesting <code>git add .</code>, which could stage or commit untracked files such as <code>.env</code></li><li>Changed the cyber safeguard notice to no longer ask people to apply to the Cyber Verification Program</li><li>Changed how Claude in Slack corrects a message it got wrong: it edits the message in place and adds a short &quot;Edited&quot; note instead of striking through the old text</li><li>Changed Claude in Slack to join channels with more than 100 members quietly, with no intro message</li><li>Removed the <code>--sandbox</code> and <code>--no-sandbox</code> flags from <code>claude remote-control</code>, which had no effect; passing either now exits with an error. Set <code>sandbox.enabled</code> in settings to sandbox sessions</li><li>Improved switching to a model with a smaller context window: a conversation too long for the new model is now summarized by the previous model first</li><li>Improved rendering performance while a long-running subagent works: its progress trail now updates incrementally instead of being reprocessed in full on every render</li><li>Improved artifacts: pages Claude writes now paint the band above a sticky header, so scrolled text no longer shows there in the mobile apps</li><li>Improved mods: in VS Code and the desktop and mobile apps, a tree drawn above the question dialog can now hold Markdown and up to 48 rows; the terminal keeps 12 plain rows</li><li>Improved WebFetch in Cowork cloud sessions to tell Claude that a page failed moments ago instead of fetching it again</li><li>Improved mod sharing in the built-in <code>plugin-authoring</code> skill: Claude scans a mod&#x27;s files for keys before opening them, and asks before scanning a folder outside the project</li><li>Improved the note Claude 3 models get about an @-mentioned PDF, so they less often answer without reading it</li><li>Improved artifact updates: Claude now applies a small change and republishes the artifact in one call, and makes larger edits and republishes within a single response</li><li>Improved the error shown when a cloud session is refused because your claude.ai login was rejected or has expired: it now tells you to sign in again with <code>claude auth login</code></li><li>Improved enforcement of managed permission rules, managed hooks and organization MCP tool names against user-installed mods</li><li>Improved memory and disk use when PDFs are @-mentioned: their bytes are no longer kept in the session transcript</li><li>Improved sandboxed Bash on Linux: Esc and Ctrl-C now work while wildcard read rules are being expanded for a command</li><li>Improved the startup warning for an unrecognized model ID: it is now one short line under the welcome banner with a docs link, instead of a long raw message</li><li>Improved the plugin-authoring skill&#x27;s steps for sharing a mod: Claude asks public or private and checks the files before creating a GitHub repository</li><li>Improved the Skill tool&#x27;s &quot;Unknown skill&quot; error to suggest a skill&#x27;s listed name when Claude wrongly adds the <code>anthropic-skills:</code> prefix to it</li><li>Improved <code>/reload-skills</code> to say it re-sends the full skill list to Claude, which is how to get skills back after compaction</li><li>Improved the error shown when a worktree cannot be created because its base commit does not resolve: it now says how the lookup ended and the likely reasons, such as a repository without a commit</li><li>Improved the error for creating a worktree at a bare-repository layout&#x27;s root: it now explains the layout instead of an unrelated git error</li><li>Improved artifact watching: a local session can now watch up to 25 published artifacts at once, up from 10</li><li>Improved background agent notifications: they now say when an agent is only waiting on its own background work, got a message too late for its result, or was stopped by a usage limit</li><li>Improved startup time in workspaces without a Python environment by starting Claude while the Python extension loads</li><li>Improved startup: the model picker and slash command menu now fill in right away in a new window on a folder you&#x27;ve opened before</li></ul><p class="omitted"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">Не показано змін: 240</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://platform.claude.com/docs/en/release-notes/overview">Claude Platform release notes</a></h3><ul lang="en"><li><a href="https://platform.claude.com/docs/en/build-with-claude/fast-mode">Fast mode</a> is out of research preview for Claude Opus 5.5, and you no longer need to request access. Requests to Claude Opus 5.5 no longer require the <code>fast-mode-2026-02-01</code> beta header, and requests that still send it keep working. Claude Opus 5.5 now has a default fast mode rate limit in every usage tier.</li><li><a href="https://platform.claude.com/docs/en/build-with-claude/fast-mode">Fast mode</a> is out of research preview for Claude Opus 5.5, and you no longer need to request access. Requests to Claude Opus 5.5 no longer require the <code>fast-mode-2026-02-01</code> beta header, and requests that still send it keep working. Claude Opus 5.5 now has a default fast mode rate limit in the Start, Build, and Scale usage tiers.</li><li>We&#x27;ve launched <a href="https://platform.claude.com/docs/en/manage-claude/opentelemetry">OpenTelemetry export</a> in beta, so you can trace Messages API requests and Claude Managed Agents sessions in your observability backend. The Claude SDK emits spans in Python, TypeScript, C#, Go, Java, PHP, and Ruby. To get spans from the API, <a href="https://platform.claude.com/docs/en/manage-claude/opentelemetry/api#add-a-destination">add an OpenTelemetry destination</a> in the Claude Console.</li></ul><p class="omitted"><a href="https://platform.claude.com/docs/en/release-notes/overview">Не показано змін: 2</a></p></div><div class="changelog-group"><h3 lang="en"><a href="https://github.com/anthropics/claude-agent-sdk-python/releases.atom">Claude Agent SDK (Python) releases</a></h3><ul lang="en"><li>v0.2.166: <strong>Hook-specific output types</strong>: Added typed output classes and missing input fields for hooks, giving hook implementations precise type information instead of untyped dicts. <code>SystemInitData</code> TypedDict: The init system message payload is now fully typed via <code>SystemInitData</code>, along with nested types <code>SystemInitMcpServer</code>, <code>SystemInitPlugin</code>, <code>SystemInitPluginError</code>, and <code>FastModeState</code>/<code>FastModeDisabledReason</code> literals.</li></ul></div></section></main>
+<footer><p>Дата випуску: 2026-10-16. Джерела вказано в кожному матеріалі.</p></footer>
+</body>
+</html>
